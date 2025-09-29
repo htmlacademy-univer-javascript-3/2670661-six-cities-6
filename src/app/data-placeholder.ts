@@ -1,0 +1,51 @@
+import {Place, PlaceType} from '../entities/place/model/types.ts';
+
+export const placesDataPlaceholder: Place[] = [
+  {
+    id: 0,
+    title: 'Beautiful & luxurious apartment at great location',
+    type: PlaceType.Apartment,
+    stars: 4,
+    costPerNight: 120,
+    photoUrl: 'img/apartment-01.jpg',
+    isPremium: true,
+  },
+  {
+    id: 1,
+    title: 'Wood and stone place',
+    type: PlaceType.Room,
+    stars: 4,
+    costPerNight: 80,
+    photoUrl: 'img/room.jpg',
+    isPremium: false,
+    isBookmarked: true,
+  },
+  {
+    id: 2,
+    title: 'Canal View Prinsengracht',
+    type: PlaceType.Apartment,
+    stars: 4,
+    costPerNight: 132,
+    photoUrl: 'img/apartment-02.jpg',
+    isPremium: false,
+  },
+  {
+    id: 3,
+    title: 'Nice, cozy, warm big bed apartment',
+    type: PlaceType.Apartment,
+    stars: 5,
+    costPerNight: 180,
+    photoUrl: 'img/apartment-03.jpg',
+    isPremium: true,
+  },
+  {
+    id: 4,
+    title: 'Wood and stone place',
+    type: PlaceType.Apartment,
+    stars: 4,
+    costPerNight: 80,
+    photoUrl: 'img/room.jpg',
+    isPremium: false,
+    isBookmarked: true,
+  },
+];
