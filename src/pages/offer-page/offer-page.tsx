@@ -1,4 +1,6 @@
-export const OfferPage = () => {
+import {FC} from 'react';
+
+export const OfferPage: FC = () => {
   return (
     <div className="page">
       <header className="header">

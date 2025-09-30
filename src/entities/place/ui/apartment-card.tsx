@@ -1,10 +1,11 @@
+import {FC} from 'react';
 import {Place} from '../model/types.ts';
 
 type ApartmentCardProps = {
   apartment: Place;
 }
 
-export const ApartmentCard = ({apartment}: ApartmentCardProps) => {
+export const ApartmentCard: FC<ApartmentCardProps> = ({apartment}) => {
   const {title, type, stars, costPerNight, photoUrl, isPremium, isBookmarked} = apartment;
 
   const bookmarkedClassList = ['place-card__bookmark-button', 'button'];
