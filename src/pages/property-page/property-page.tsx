@@ -1,4 +1,6 @@
-export const PropertyPage = () => {
+import {FC} from 'react';
+
+export const PropertyPage: FC = () => {
   return (
     <div className="page">
       <header className="header">

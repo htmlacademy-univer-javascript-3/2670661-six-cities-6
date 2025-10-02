@@ -1,3 +1,4 @@
+import {FC} from 'react';
 import {Place} from '../../entities/place/model/types.ts';
 import {ApartmentCard} from '../../entities/place/ui/apartment-card.tsx';
 
@@ -5,7 +6,7 @@ type MainPageProps = {
   places: Place[];
 };
 
-export const MainPage = ({places}: MainPageProps) => {
+export const MainPage: FC<MainPageProps> = ({places}) => {
   return (
     <div className="page page--gray page--main">
       <header className="header">
