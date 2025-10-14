@@ -1,6 +1,6 @@
-import {Place, PlaceType} from '../entities/place/model/types.ts';
+import {Offer, PlaceType} from '../../entities/offer/model/types.ts';
 
-export const placesDataPlaceholder: Place[] = [
+export const offersMock: Offer[] = [
   {
     id: 0,
     title: 'Beautiful & luxurious apartment at great location',

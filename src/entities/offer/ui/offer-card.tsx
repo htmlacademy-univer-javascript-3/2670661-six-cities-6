@@ -1,12 +1,12 @@
 import {FC} from 'react';
-import {Place} from '../model/types.ts';
+import {Offer} from '../model/types.ts';
 
-type ApartmentCardProps = {
-  apartment: Place;
+type OfferCardProps = {
+  offer: Offer;
 }
 
-export const ApartmentCard: FC<ApartmentCardProps> = ({apartment}) => {
-  const {title, type, stars, costPerNight, photoUrl, isPremium, isBookmarked} = apartment;
+export const OfferCard: FC<OfferCardProps> = ({offer}) => {
+  const {title, type, stars, costPerNight, photoUrl, isPremium, isBookmarked} = offer;
 
   const bookmarkedClassList = ['place-card__bookmark-button', 'button'];
   if (isBookmarked) {

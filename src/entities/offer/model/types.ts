@@ -3,7 +3,7 @@ export enum PlaceType {
   Apartment = 'Apartment',
 }
 
-export type Place = {
+export type Offer = {
   id: number;
   title: string;
   type: PlaceType;

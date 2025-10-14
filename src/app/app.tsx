@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {Place} from '../entities/place/model/types.ts';
+import {Offer} from '../entities/offer/model/types.ts';
 import {PrivateRoute} from '../features/private-route/private-route.tsx';
 import {FavouritesPage} from '../pages/favourites-page/favourites-page.tsx';
 import {LoginPage} from '../pages/login-page/login-page.tsx';
@@ -11,14 +11,14 @@ import {PropertyPage} from '../pages/property-page/property-page.tsx';
 import {RoutePath} from './routes.ts';
 
 type AppProps = {
-  places: Place[];
+  offers: Offer[];
 };
 
-export const App: FC<AppProps> = ({places}) => {
+export const App: FC<AppProps> = ({offers}) => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<MainPage places={places}/>}/>
+        <Route index element={<MainPage offers={offers}/>}/>
         <Route path={RoutePath.LoginPage} element={<LoginPage/>}/>
         <Route path={RoutePath.FavouritesPage} element={<PrivateRoute isAuthorized={false}/>}>
           <Route path="" element={<FavouritesPage/>}/>
