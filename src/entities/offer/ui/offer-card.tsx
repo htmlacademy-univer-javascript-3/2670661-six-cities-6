@@ -1,11 +1,12 @@
-import {FC} from 'react';
+import {FC, MouseEventHandler} from 'react';
 import {Offer} from '../model/types.ts';
 
 type OfferCardProps = {
   offer: Offer;
+  onMouseEnter: MouseEventHandler<HTMLElement>;
 }
 
-export const OfferCard: FC<OfferCardProps> = ({offer}) => {
+export const OfferCard: FC<OfferCardProps> = ({offer, onMouseEnter}) => {
   const {title, type, stars, costPerNight, photoUrl, isPremium, isBookmarked} = offer;
 
   const bookmarkedClassList = ['place-card__bookmark-button', 'button'];
@@ -14,7 +15,7 @@ export const OfferCard: FC<OfferCardProps> = ({offer}) => {
   }
 
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseEnter={onMouseEnter}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>

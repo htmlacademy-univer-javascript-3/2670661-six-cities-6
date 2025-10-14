@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {Offer} from '../../entities/offer/model/types.ts';
-import {OfferCards} from '../../entities/offer/ui/offer-cards.tsx';
+import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
 
 type MainPageProps = {
   offers: Offer[];
@@ -96,7 +96,7 @@ export const MainPage: FC<MainPageProps> = ({offers}) => {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferCards offers={offers}/>
+              <OfferCardList offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

@@ -15,13 +15,15 @@ type AppProps = {
 };
 
 export const App: FC<AppProps> = ({offers}) => {
+  const favourites = offers.filter((offer) => offer.isBookmarked);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route index element={<MainPage offers={offers}/>}/>
         <Route path={RoutePath.LoginPage} element={<LoginPage/>}/>
-        <Route path={RoutePath.FavouritesPage} element={<PrivateRoute isAuthorized={false}/>}>
-          <Route path="" element={<FavouritesPage/>}/>
+        <Route path={RoutePath.FavouritesPage} element={<PrivateRoute isAuthorized={true}/>}>
+          <Route path="" element={<FavouritesPage offers={favourites}/>}/>
         </Route>
         <Route path={RoutePath.OfferPage} element={<OfferPage/>}>
           <Route path=":id" element={<OfferPage/>}/>
