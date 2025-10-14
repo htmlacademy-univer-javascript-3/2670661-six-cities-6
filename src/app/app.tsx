@@ -20,13 +20,9 @@ export const App: FC<AppProps> = ({places}) => {
       <Routes>
         <Route index element={<MainPage places={places}/>}/>
         <Route path={RoutePath.LoginPage} element={<LoginPage/>}/>
-        <Route
-          path={RoutePath.FavouritesPage} element={
-            <PrivateRoute isAuthorized={false}>
-              <FavouritesPage/>
-            </PrivateRoute>
-          }
-        />
+        <Route path={RoutePath.FavouritesPage} element={<PrivateRoute isAuthorized={false}/>}>
+          <Route path="" element={<FavouritesPage/>}/>
+        </Route>
         <Route path={RoutePath.OfferPage} element={<OfferPage/>}>
           <Route path=":id" element={<OfferPage/>}/>
         </Route>

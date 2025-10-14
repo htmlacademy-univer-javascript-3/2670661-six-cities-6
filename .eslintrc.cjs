@@ -15,6 +15,7 @@ module.exports = {
   rules: {
     'react-refresh/only-export-components': 'warn',
     'arrow-body-style': 'warn',
+    'react/ jsx-boolean-value': 'off',
   },
   overrides: [
     {
