@@ -108,10 +108,14 @@ export const MainPage: FC<MainPageProps> = ({offers}) => {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferCardList offers={amsterdamOffers}/>
+              <OfferCardList offers={amsterdamOffers} containerClassName="cities__places-list places__list tabs__content"/>
             </section>
             <div className="cities__right-section">
-              <MapWidget mapCenter={amsterdamCityCoordinates} markers={markers}/>
+              <MapWidget
+                mapCenter={amsterdamCityCoordinates}
+                markers={markers}
+                mapContainerClassName="cities__map map"
+              />
             </div>
           </div>
         </div>

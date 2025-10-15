@@ -10,15 +10,16 @@ const URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r
 type MapWidgetProps = {
   mapCenter: Coordinates;
   markers?: PointOnMap[];
+  mapContainerClassName?: string;
 };
 
-export const MapWidget: FC<MapWidgetProps> = ({mapCenter, markers = []}) => {
+export const MapWidget: FC<MapWidgetProps> = ({mapCenter, markers = [], mapContainerClassName}) => {
   return (
     <MapContainer
       center={[mapCenter.latitude, mapCenter.longitude]}
       zoom={13}
       scrollWheelZoom={true}
-      className="cities__map map"
+      className={mapContainerClassName}
     >
       <TileLayer attribution={ATTRIBUTION} url={URL}/>
       {markers.map((marker) => (
