@@ -1,12 +1,12 @@
 import {FC} from 'react';
-import {Place} from '../../entities/place/model/types.ts';
-import {ApartmentCard} from '../../entities/place/ui/apartment-card.tsx';
+import {Offer} from '../../entities/offer/model/types.ts';
+import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
 
 type MainPageProps = {
-  places: Place[];
+  offers: Offer[];
 };
 
-export const MainPage: FC<MainPageProps> = ({places}) => {
+export const MainPage: FC<MainPageProps> = ({offers}) => {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -96,11 +96,7 @@ export const MainPage: FC<MainPageProps> = ({places}) => {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {places.map((apartment) =>
-                  <ApartmentCard key={apartment.id} apartment={apartment}/>
-                )}
-              </div>
+              <OfferCardList offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

@@ -1,11 +1,12 @@
-import {Place, PlaceType} from '../entities/place/model/types.ts';
+import {Offer, PlaceType} from '../../entities/offer/model/types.ts';
 
-export const placesDataPlaceholder: Place[] = [
+export const offersMock: Offer[] = [
   {
     id: 0,
     title: 'Beautiful & luxurious apartment at great location',
     type: PlaceType.Apartment,
     stars: 4,
+    city: 'Amsterdam',
     costPerNight: 120,
     photoUrl: 'img/apartment-01.jpg',
     isPremium: true,
@@ -15,6 +16,7 @@ export const placesDataPlaceholder: Place[] = [
     title: 'Wood and stone place',
     type: PlaceType.Room,
     stars: 4,
+    city: 'Amsterdam',
     costPerNight: 80,
     photoUrl: 'img/room.jpg',
     isPremium: false,
@@ -25,6 +27,7 @@ export const placesDataPlaceholder: Place[] = [
     title: 'Canal View Prinsengracht',
     type: PlaceType.Apartment,
     stars: 4,
+    city: 'Amsterdam',
     costPerNight: 132,
     photoUrl: 'img/apartment-02.jpg',
     isPremium: false,
@@ -34,17 +37,30 @@ export const placesDataPlaceholder: Place[] = [
     title: 'Nice, cozy, warm big bed apartment',
     type: PlaceType.Apartment,
     stars: 5,
+    city: 'Amsterdam',
     costPerNight: 180,
     photoUrl: 'img/apartment-03.jpg',
     isPremium: true,
+    isBookmarked: true,
   },
   {
     id: 4,
     title: 'Wood and stone place',
     type: PlaceType.Apartment,
     stars: 4,
+    city: 'Amsterdam',
     costPerNight: 80,
     photoUrl: 'img/room.jpg',
+    isPremium: false,
+  },
+  {
+    id: 5,
+    title: 'White castle',
+    type: PlaceType.Apartment,
+    stars: 5,
+    city: 'Cologne',
+    costPerNight: 180,
+    photoUrl: 'img/apartment-small-04.jpg',
     isPremium: false,
     isBookmarked: true,
   },

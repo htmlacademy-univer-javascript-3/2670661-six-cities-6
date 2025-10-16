@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {App} from './app/app.tsx';
-import {placesDataPlaceholder} from './app/data-placeholder.ts';
+import {offersMock} from './shared/mocks/offers.ts';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,6 +9,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App places={placesDataPlaceholder}/>
+    <App offers={offersMock}/>
   </React.StrictMode>
 );

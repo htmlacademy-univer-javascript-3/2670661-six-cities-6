@@ -1,12 +1,15 @@
-import {FC} from 'react';
-import {Place} from '../model/types.ts';
+import {FC, MouseEventHandler} from 'react';
+import {Link} from 'react-router-dom';
+import {RoutePath} from '../../../app/routes.ts';
+import {Offer} from '../model/types.ts';
 
-type ApartmentCardProps = {
-  apartment: Place;
+type OfferCardProps = {
+  offer: Offer;
+  onMouseEnter: MouseEventHandler<HTMLElement>;
 }
 
-export const ApartmentCard: FC<ApartmentCardProps> = ({apartment}) => {
-  const {title, type, stars, costPerNight, photoUrl, isPremium, isBookmarked} = apartment;
+export const OfferCard: FC<OfferCardProps> = ({offer, onMouseEnter}) => {
+  const {title, type, stars, costPerNight, photoUrl, isPremium, isBookmarked} = offer;
 
   const bookmarkedClassList = ['place-card__bookmark-button', 'button'];
   if (isBookmarked) {
@@ -14,7 +17,7 @@ export const ApartmentCard: FC<ApartmentCardProps> = ({apartment}) => {
   }
 
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseEnter={onMouseEnter}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -45,7 +48,7 @@ export const ApartmentCard: FC<ApartmentCardProps> = ({apartment}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/${RoutePath.OfferPage}/${offer.id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
