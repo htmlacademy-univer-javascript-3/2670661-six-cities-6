@@ -1,12 +1,24 @@
 import {FC} from 'react';
 import {Offer} from '../../entities/offer/model/types.ts';
 import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
+import {Coordinates} from '../../shared/types/coordinates.ts';
+import {PointOnMap} from '../../widgets/map/model/types.ts';
+import {MapWidget} from '../../widgets/map/ui/map-widget.tsx';
 
 type MainPageProps = {
   offers: Offer[];
 };
 
+const amsterdamCityCoordinates: Coordinates = {latitude: 52.372134977537875, longitude: 4.894739637504961};
+
 export const MainPage: FC<MainPageProps> = ({offers}) => {
+  const amsterdamOffers = offers.filter((offer) => offer.city === 'Amsterdam');
+  const markers: PointOnMap[] = amsterdamOffers.map((offer) => ({
+    id: offer.id,
+    coordinates: offer.coordinates,
+    popupNode: offer.title
+  }));
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -96,10 +108,10 @@ export const MainPage: FC<MainPageProps> = ({offers}) => {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferCardList offers={offers}/>
+              <OfferCardList offers={amsterdamOffers}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <MapWidget mapCenter={amsterdamCityCoordinates} markers={markers}/>
             </div>
           </div>
         </div>
