@@ -8,7 +8,7 @@ import {MainPage} from '../pages/main-page/main-page.tsx';
 import {NotFound404Page} from '../pages/not-found-404-page/not-found-404-page.tsx';
 import {OfferPage} from '../pages/offer-page/offer-page.tsx';
 import {PropertyPage} from '../pages/property-page/property-page.tsx';
-import {RoutePath} from './routes.ts';
+import {RoutePath} from '../shared/enums/routes.ts';
 
 type AppProps = {
   offers: Offer[];
@@ -20,7 +20,7 @@ export const App: FC<AppProps> = ({offers}) => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<MainPage offers={offers}/>}/>
+        <Route index element={<MainPage initialOffers={offers}/>}/>
         <Route path={RoutePath.LoginPage} element={<LoginPage/>}/>
         <Route path={RoutePath.FavouritesPage} element={<PrivateRoute isAuthorized={true}/>}>
           <Route path="" element={<FavouritesPage offers={favourites}/>}/>

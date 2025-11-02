@@ -1,6 +1,6 @@
 import {FC, MouseEventHandler} from 'react';
 import {Link} from 'react-router-dom';
-import {RoutePath} from '../../../app/routes.ts';
+import {RoutePath} from '../../../shared/enums/routes.ts';
 import {Offer} from '../model/types.ts';
 
 type OfferCardProps = {
