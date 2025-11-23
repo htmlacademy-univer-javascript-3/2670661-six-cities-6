@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {Navigate, Outlet} from 'react-router-dom';
-import {RoutePath} from '../../app/routes.ts';
+import {RoutePath} from '../../shared/enums/routes.ts';
 
 type PrivateRouteProps = {
   isAuthorized: boolean;

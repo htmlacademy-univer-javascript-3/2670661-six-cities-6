@@ -1,5 +1,5 @@
 import {NavLink} from 'react-router-dom';
-import {RoutePath} from '../../app/routes.ts';
+import {RoutePath} from '../../shared/enums/routes.ts';
 
 export const NotFound404Page = () => {
   return (

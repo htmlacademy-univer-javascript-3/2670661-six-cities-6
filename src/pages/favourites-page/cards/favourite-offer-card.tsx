@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import {Link} from 'react-router-dom';
-import {RoutePath} from '../../../app/routes.ts';
 import {Offer} from '../../../entities/offer/model/types.ts';
+import {RoutePath} from '../../../shared/enums/routes.ts';
 
 type FavouriteOfferCardProps = {
   offer: Offer;
