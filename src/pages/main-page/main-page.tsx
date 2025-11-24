@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {City} from '../../entities/city/model/types.ts';
 import {CityLinkList} from '../../entities/city/ui/city-link-list.tsx';
 import {Offer} from '../../entities/offer/model/types.ts';
@@ -9,6 +9,8 @@ import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-h
 import {Coordinates} from '../../shared/types/coordinates.ts';
 import {PointOnMap} from '../../widgets/map/model/types.ts';
 import {MapWidget} from '../../widgets/map/ui/map-widget.tsx';
+import {SelectorOption} from '../../widgets/selector/model/types.ts';
+import {SelectorWidget} from '../../widgets/selector/ui/selector-widget.tsx';
 
 type MainPageProps = {
   initialOffers: Offer[];
@@ -16,10 +18,19 @@ type MainPageProps = {
 
 const amsterdamCityCoordinates: Coordinates = {latitude: 52.372134977537875, longitude: 4.894739637504961};
 
+const sortOptions: SelectorOption[] = [
+  {key: 'popular', value: 'Popular'},
+  {key: 'price_LtH', value: 'Price: low to high'},
+  {key: 'price_HtL', value: 'Price: high to low'},
+  {key: 'topRated', value: 'Top rated first'},
+];
+
 export const MainPage: FC<MainPageProps> = ({initialOffers}) => {
   const dispatch = useAppDispatch();
   const activeCity = useAppSelector((state) => state.offers.city);
   const activeOffers = useAppSelector((state) => state.offers.offers);
+
+  const [sort, setSort] = useState<SelectorOption['key']>(sortOptions[0].key);
 
   const setActiveCity = (city: City) => {
     dispatch(setCity(city));
@@ -87,21 +98,13 @@ export const MainPage: FC<MainPageProps> = ({initialOffers}) => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{activeOffers.length} places to stay in {activeCity.name}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
+              <SelectorWidget
+                options={sortOptions}
+                activeOptionKey={sort}
+                onSelect={(sortOption) => setSort(sortOption)}
+              >
+                Sort by
+              </SelectorWidget>
               <OfferCardList offers={activeOffers} containerClassName="cities__places-list places__list tabs__content"/>
             </section>
             <div className="cities__right-section">
