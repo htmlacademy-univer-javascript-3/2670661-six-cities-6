@@ -3,7 +3,7 @@ import {City} from '../../entities/city/model/types.ts';
 import {CityLinkList} from '../../entities/city/ui/city-link-list.tsx';
 import {Offer} from '../../entities/offer/model/types.ts';
 import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
-import {setCity, setOffers} from '../../features/offers-manager/model/offers-slice.ts';
+import {setActiveOffer, setCity, setOffers} from '../../features/offers-manager/model/offers-slice.ts';
 import {citiesMock} from '../../shared/mocks/cities.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {Coordinates} from '../../shared/types/coordinates.ts';
@@ -29,6 +29,7 @@ export const MainPage: FC<MainPageProps> = ({initialOffers}) => {
   const dispatch = useAppDispatch();
   const activeCity = useAppSelector((state) => state.offers.city);
   const activeOffers = useAppSelector((state) => state.offers.offers);
+  const activeOfferId = useAppSelector((state) => state.offers.activeOfferId);
 
   const [sort, setSort] = useState<SelectorOption['key']>(sortOptions[0].key);
 
@@ -38,6 +39,10 @@ export const MainPage: FC<MainPageProps> = ({initialOffers}) => {
     const cityName = city.name;
     const newOffers = initialOffers.filter((offer) => offer.city === cityName);
     dispatch(setOffers(newOffers));
+  };
+
+  const handleOfferHover = (offerId: Offer['id']) => {
+    dispatch(setActiveOffer(offerId));
   };
 
   // temporary decision to set offers on init
@@ -105,12 +110,17 @@ export const MainPage: FC<MainPageProps> = ({initialOffers}) => {
               >
                 Sort by
               </SelectorWidget>
-              <OfferCardList offers={activeOffers} containerClassName="cities__places-list places__list tabs__content"/>
+              <OfferCardList
+                offers={activeOffers}
+                containerClassName="cities__places-list places__list tabs__content"
+                onCardHover={handleOfferHover}
+              />
             </section>
             <div className="cities__right-section">
               <MapWidget
                 mapCenter={amsterdamCityCoordinates}
                 markers={markers}
+                activeMarkers={activeOfferId ? [activeOfferId] : []}
                 mapContainerClassName="cities__map map"
               />
             </div>

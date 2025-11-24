@@ -7,11 +7,13 @@ import {citiesMock} from '../../../shared/mocks/cities.ts';
 type OffersState = {
   city: City;
   offers: Offer[];
+  activeOfferId: Offer['id'] | null;
 };
 
 const initialState: OffersState = {
   city: citiesMock[0],
   offers: [],
+  activeOfferId: null,
 };
 
 export const offersSlice = createSlice({
@@ -24,8 +26,11 @@ export const offersSlice = createSlice({
     setOffers: (state: OffersState, action: PayloadAction<Offer[]>) => {
       state.offers = action.payload;
     },
+    setActiveOffer: (state: OffersState, action: PayloadAction<Offer['id']>) => {
+      state.activeOfferId = action.payload;
+    },
   },
 });
 
 export const offersReducer = offersSlice.reducer;
-export const {setCity, setOffers} = offersSlice.actions;
+export const {setCity, setOffers, setActiveOffer} = offersSlice.actions;
