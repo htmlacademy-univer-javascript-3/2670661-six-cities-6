@@ -2,7 +2,7 @@ import {Offer, PlaceType} from '../../entities/offer/model/types.ts';
 
 export const offersMock: Offer[] = [
   {
-    id: 0,
+    id: 1,
     title: 'Beautiful & luxurious apartment at great location',
     type: PlaceType.Apartment,
     stars: 4,
@@ -13,7 +13,7 @@ export const offersMock: Offer[] = [
     isPremium: true,
   },
   {
-    id: 1,
+    id: 2,
     title: 'Wood and stone place',
     type: PlaceType.Room,
     stars: 4,
@@ -25,7 +25,7 @@ export const offersMock: Offer[] = [
     isBookmarked: true,
   },
   {
-    id: 2,
+    id: 3,
     title: 'Canal View Prinsengracht',
     type: PlaceType.Apartment,
     stars: 4,
@@ -36,7 +36,7 @@ export const offersMock: Offer[] = [
     isPremium: false,
   },
   {
-    id: 3,
+    id: 4,
     title: 'Nice, cozy, warm big bed apartment',
     type: PlaceType.Apartment,
     stars: 5,
@@ -48,7 +48,7 @@ export const offersMock: Offer[] = [
     isBookmarked: true,
   },
   {
-    id: 4,
+    id: 5,
     title: 'Wood and stone place',
     type: PlaceType.Apartment,
     stars: 4,
@@ -59,7 +59,7 @@ export const offersMock: Offer[] = [
     isPremium: false,
   },
   {
-    id: 5,
+    id: 6,
     title: 'White castle',
     type: PlaceType.Apartment,
     stars: 5,

@@ -1,7 +1,8 @@
+import 'leaflet/dist/leaflet.css';
 import {FC} from 'react';
 import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 import {Coordinates} from '../../../shared/types/coordinates.ts';
+import {activeMarker, defaultMarker} from '../model/markers.ts';
 import {PointOnMap} from '../model/types.ts';
 
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
@@ -10,10 +11,11 @@ const URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r
 type MapWidgetProps = {
   mapCenter: Coordinates;
   markers?: PointOnMap[];
+  activeMarkers?: PointOnMap['id'][];
   mapContainerClassName?: string;
 };
 
-export const MapWidget: FC<MapWidgetProps> = ({mapCenter, markers = [], mapContainerClassName}) => {
+export const MapWidget: FC<MapWidgetProps> = ({mapCenter, markers = [], activeMarkers = [], mapContainerClassName}) => {
   return (
     <MapContainer
       center={[mapCenter.latitude, mapCenter.longitude]}
@@ -22,11 +24,19 @@ export const MapWidget: FC<MapWidgetProps> = ({mapCenter, markers = [], mapConta
       className={mapContainerClassName}
     >
       <TileLayer attribution={ATTRIBUTION} url={URL}/>
-      {markers.map((marker) => (
-        <Marker key={marker.id} position={[marker.coordinates.latitude, marker.coordinates.longitude]}>
-          {marker.popupNode && <Popup>{marker.popupNode}</Popup>}
-        </Marker>
-      ))}
+      {markers.map(({id: markerId, coordinates, popupNode}) => {
+        const isActive = activeMarkers.includes(markerId);
+        return (
+          <Marker
+            key={markerId}
+            position={[coordinates.latitude, coordinates.longitude]}
+            icon={isActive ? activeMarker : defaultMarker}
+            zIndexOffset={isActive ? 100000 : 0}
+          >
+            {popupNode && <Popup>{popupNode}</Popup>}
+          </Marker>
+        );
+      })}
     </MapContainer>
   );
 };
