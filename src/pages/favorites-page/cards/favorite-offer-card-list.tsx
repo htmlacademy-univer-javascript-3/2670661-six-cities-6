@@ -1,14 +1,14 @@
 import {FC} from 'react';
 import {Offer} from '../../../entities/offer/model/types.ts';
-import {FavouriteOfferCard} from './favourite-offer-card.tsx';
+import {FavoriteOfferCard} from './favorite-offer-card.tsx';
 
-type FavouriteOfferCardListProps = {
+type FavoriteOfferCardListProps = {
   offers: Offer[];
 };
 
 type OffersByCity = Record<Offer['city'], Offer[]>;
 
-export const FavouriteOfferCardList: FC<FavouriteOfferCardListProps> = ({offers}) => {
+export const FavoriteOfferCardList: FC<FavoriteOfferCardListProps> = ({offers}) => {
   const offersByCity: OffersByCity = offers.reduce((result, offer) => {
     const city = offer.city;
     if (!result[city]) {
@@ -31,7 +31,7 @@ export const FavouriteOfferCardList: FC<FavouriteOfferCardListProps> = ({offers}
           </div>
           <div className="favorites__places">
             {cityOffers.map((offer) => (
-              <FavouriteOfferCard key={offer.id} offer={offer}/>
+              <FavoriteOfferCard key={offer.id} offer={offer}/>
             ))}
           </div>
         </li>

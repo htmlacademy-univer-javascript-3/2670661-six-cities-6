@@ -1,12 +1,12 @@
 import {FC} from 'react';
 import {Offer} from '../../entities/offer/model/types.ts';
-import {FavouriteOfferCardList} from './cards/favourite-offer-card-list.tsx';
+import {FavoriteOfferCardList} from './cards/favorite-offer-card-list.tsx';
 
-type FavouritesPageProps = {
+type FavoritesPageProps = {
   offers: Offer[];
 };
 
-export const FavouritesPage: FC<FavouritesPageProps> = ({offers}) => {
+export const FavoritesPage: FC<FavoritesPageProps> = ({offers}) => {
   return (
     <div className="page">
       <header className="header">
@@ -42,7 +42,7 @@ export const FavouritesPage: FC<FavouritesPageProps> = ({offers}) => {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavouriteOfferCardList offers={offers}/>
+            <FavoriteOfferCardList offers={offers}/>
           </section>
         </div>
       </main>

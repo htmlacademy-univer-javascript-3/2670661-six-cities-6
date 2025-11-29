@@ -14,7 +14,7 @@ export const OfferPage: FC = () => {
   const neighbourhoodPlaces = offersMock.filter((offer) => offer.city === 'Amsterdam').slice(0, 3);
   const markers: PointOnMap[] = neighbourhoodPlaces.map((offer) => ({
     id: offer.id,
-    coordinates: offer.coordinates,
+    coordinates: offer.location,
     popupNode: offer.title
   }));
 

@@ -3,7 +3,7 @@ import {City} from '../../entities/city/model/types.ts';
 import {CityLinkList} from '../../entities/city/ui/city-link-list.tsx';
 import {Offer} from '../../entities/offer/model/types.ts';
 import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
-import {setActiveOffer, setCity, setOffers} from '../../features/offers-manager/model/offers-slice.ts';
+import {loadOffers, setActiveOffer, setCity, setOffers} from '../../features/offers-manager/model/offers-slice.ts';
 import {citiesMock} from '../../shared/mocks/cities.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {Coordinates} from '../../shared/types/coordinates.ts';
@@ -27,7 +27,7 @@ const sortOptions: SelectorOption[] = [
 
 export const MainPage: FC<MainPageProps> = ({initialOffers}) => {
   const dispatch = useAppDispatch();
-  const activeCity = useAppSelector((state) => state.offers.city);
+  const currentCity = useAppSelector((state) => state.offers.currentCity);
   const activeOffers = useAppSelector((state) => state.offers.offers);
   const activeOfferId = useAppSelector((state) => state.offers.activeOfferId);
 
@@ -54,9 +54,14 @@ export const MainPage: FC<MainPageProps> = ({initialOffers}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    dispatch(loadOffers());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const markers: PointOnMap[] = activeOffers.map((offer) => ({
     id: offer.id,
-    coordinates: offer.coordinates,
+    coordinates: offer.location,
     popupNode: offer.title
   }));
 
@@ -95,14 +100,14 @@ export const MainPage: FC<MainPageProps> = ({initialOffers}) => {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CityLinkList cities={citiesMock} activeCity={activeCity} onCityClick={setActiveCity}/>
+            <CityLinkList cities={citiesMock} activeCity={currentCity} onCityClick={setActiveCity}/>
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{activeOffers.length} places to stay in {activeCity.name}</b>
+              <b className="places__found">{activeOffers.length} places to stay in {currentCity.name}</b>
               <SelectorWidget
                 options={sortOptions}
                 activeOptionKey={sort}
