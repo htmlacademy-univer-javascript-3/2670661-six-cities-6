@@ -1,10 +1,10 @@
 import {FC} from 'react';
 import {RoutePath} from '../../../shared/enums/routes.ts';
-import {City} from '../model/types.ts';
+import {CitiesMap, City} from '../model/types.ts';
 import {CityLink} from './city-link.tsx';
 
 type CityLinkListProps = {
-  cities: City[];
+  cities: CitiesMap;
   activeCity: City;
   onCityClick: (city: City) => void;
 };
@@ -13,9 +13,9 @@ export const CityLinkList: FC<CityLinkListProps> = ({cities, activeCity, onCityC
   const activeCityName = activeCity.name;
   return (
     <ul className="locations__list tabs__list">
-      {cities.map((city) => (
+      {Object.values(cities).map((city) => (
         <CityLink
-          key={city.id}
+          key={city.name}
           city={city}
           href={`${RoutePath.MainPage}/#`}
           onCityClick={onCityClick}

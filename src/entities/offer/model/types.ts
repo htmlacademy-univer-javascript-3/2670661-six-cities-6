@@ -42,4 +42,4 @@ export type Offer = {
   previewImage: OfferDto['previewImage'];
 }
 
-export type OffersByCity = Record<string, Offer[]>;
+export type OffersByCity = Record<Offer['city'], Offer[]>;

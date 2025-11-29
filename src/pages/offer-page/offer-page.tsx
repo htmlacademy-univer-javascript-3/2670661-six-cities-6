@@ -1,17 +1,16 @@
 import {FC} from 'react';
 import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
 import {ReviewList} from '../../entities/review/ui/review-list.tsx';
-import {offersMock} from '../../shared/mocks/offers.ts';
 import {reviewsMock} from '../../shared/mocks/reviews.ts';
-import {Coordinates} from '../../shared/types/coordinates.ts';
+import {useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {PointOnMap} from '../../widgets/map/model/types.ts';
 import {MapWidget} from '../../widgets/map/ui/map-widget.tsx';
 import {FeedbackForm} from './feedback-form.tsx';
 
-const amsterdamCityCoordinates: Coordinates = {latitude: 52.372134977537875, longitude: 4.894739637504961};
-
 export const OfferPage: FC = () => {
-  const neighbourhoodPlaces = offersMock.filter((offer) => offer.city === 'Amsterdam').slice(0, 3);
+  const currentCity = useAppSelector((state) => state.offers.currentCity);
+  const offers = useAppSelector((state) => state.offers.currentCityOffers);
+  const neighbourhoodPlaces = offers.slice(0, 3);
   const markers: PointOnMap[] = neighbourhoodPlaces.map((offer) => ({
     id: offer.id,
     coordinates: offer.location,
@@ -175,7 +174,7 @@ export const OfferPage: FC = () => {
             </div>
           </div>
           <MapWidget
-            mapCenter={amsterdamCityCoordinates}
+            mapCenter={currentCity.location}
             mapContainerClassName="offer__map map"
             markers={markers}
           />

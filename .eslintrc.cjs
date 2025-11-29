@@ -16,6 +16,7 @@ module.exports = {
     'react-refresh/only-export-components': 'warn',
     'arrow-body-style': 'warn',
     'react/jsx-boolean-value': 'off',
+    'prefer-template': 'off',
   },
   overrides: [
     {

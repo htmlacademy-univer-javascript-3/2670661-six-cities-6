@@ -1,26 +1,15 @@
 import {FC} from 'react';
-import {Offer} from '../../../entities/offer/model/types.ts';
+import {OffersByCity} from '../../../entities/offer/model/types.ts';
 import {FavoriteOfferCard} from './favorite-offer-card.tsx';
 
 type FavoriteOfferCardListProps = {
-  offers: Offer[];
+  offers: OffersByCity;
 };
 
-type OffersByCity = Record<Offer['city'], Offer[]>;
-
 export const FavoriteOfferCardList: FC<FavoriteOfferCardListProps> = ({offers}) => {
-  const offersByCity: OffersByCity = offers.reduce((result, offer) => {
-    const city = offer.city;
-    if (!result[city]) {
-      result[city] = [];
-    }
-    result[city].push(offer);
-    return result;
-  }, {} as OffersByCity);
-
   return (
     <ul className="favorites__list">
-      {Object.entries(offersByCity).map(([city, cityOffers]) => (
+      {Object.entries(offers).map(([city, cityOffers]) => (
         <li key={city} className="favorites__locations-items">
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
