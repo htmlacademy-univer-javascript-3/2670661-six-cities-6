@@ -1,4 +1,8 @@
+import {Coordinates} from '../../../shared/types/coordinates.ts';
+
 export type City = {
-  id: number;
   name: string;
+  location: Coordinates;
 };
+
+export type CitiesMap = Record<City['name'], City>;

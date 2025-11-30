@@ -9,10 +9,10 @@ type OfferCardProps = {
 }
 
 export const OfferCard: FC<OfferCardProps> = ({offer, onMouseEnter}) => {
-  const {title, type, stars, costPerNight, photoUrl, isPremium, isBookmarked} = offer;
+  const {title, type, rating, price, previewImage, isPremium, isFavorite} = offer;
 
   const bookmarkedClassList = ['place-card__bookmark-button', 'button'];
-  if (isBookmarked) {
+  if (isFavorite) {
     bookmarkedClassList.push('place-card__bookmark-button--active');
   }
 
@@ -25,13 +25,13 @@ export const OfferCard: FC<OfferCardProps> = ({offer, onMouseEnter}) => {
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={photoUrl} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{costPerNight}</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className={bookmarkedClassList.join(' ')} type="button">
@@ -43,7 +43,7 @@ export const OfferCard: FC<OfferCardProps> = ({offer, onMouseEnter}) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${20 * stars}%`}}></span>
+            <span style={{width: `${20 * rating}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

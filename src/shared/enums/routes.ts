@@ -1,6 +1,6 @@
 export enum RoutePath {
   MainPage = '',
-  FavouritesPage = 'favourites',
+  FavoritesPage = 'favorites',
   LoginPage = 'login',
   OfferPage = 'offer',
   PropertyPage = 'property',

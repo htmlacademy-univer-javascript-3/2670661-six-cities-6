@@ -5,18 +5,41 @@ export enum PlaceType {
   Apartment = 'Apartment',
 }
 
-export type Offer = {
-  id: number;
+export type OfferDto = {
+  id: string;
   title: string;
-  type: PlaceType;
-  stars: 1 | 2 | 3 | 4 | 5;
-  city: string;
-  coordinates: Coordinates;
-
-  /** Cost in euro */
-  costPerNight: number;
-
-  photoUrl: string;
-  isPremium?: boolean;
-  isBookmarked?: boolean;
+  type: string;
+  price: number;
+  city: {
+    name: string;
+    location: {
+      latitude: number;
+      longitude: number;
+      zoom: number;
+    };
+  };
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
 }
+
+export type Offer = {
+  id: OfferDto['id'];
+  title: OfferDto['title'];
+  type: OfferDto['type'];
+  price: OfferDto['price'];
+  city: string;
+  location: Coordinates;
+  isPremium: OfferDto['isPremium'];
+  isFavorite: OfferDto['isFavorite'];
+  rating: OfferDto['rating'];
+  previewImage: OfferDto['previewImage'];
+}
+
+export type OffersByCity = Record<Offer['city'], Offer[]>;

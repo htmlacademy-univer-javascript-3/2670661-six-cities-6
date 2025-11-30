@@ -1,20 +1,21 @@
 import {FC} from 'react';
+import {NavLink} from 'react-router-dom';
 import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
 import {ReviewList} from '../../entities/review/ui/review-list.tsx';
-import {offersMock} from '../../shared/mocks/offers.ts';
+import {RoutePath} from '../../shared/enums/routes.ts';
 import {reviewsMock} from '../../shared/mocks/reviews.ts';
-import {Coordinates} from '../../shared/types/coordinates.ts';
+import {useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {PointOnMap} from '../../widgets/map/model/types.ts';
 import {MapWidget} from '../../widgets/map/ui/map-widget.tsx';
 import {FeedbackForm} from './feedback-form.tsx';
 
-const amsterdamCityCoordinates: Coordinates = {latitude: 52.372134977537875, longitude: 4.894739637504961};
-
 export const OfferPage: FC = () => {
-  const neighbourhoodPlaces = offersMock.filter((offer) => offer.city === 'Amsterdam').slice(0, 3);
+  const currentCity = useAppSelector((state) => state.offers.currentCity);
+  const offers = useAppSelector((state) => state.offers.currentCityOffers);
+  const neighbourhoodPlaces = offers.slice(0, 3);
   const markers: PointOnMap[] = neighbourhoodPlaces.map((offer) => ({
     id: offer.id,
-    coordinates: offer.coordinates,
+    coordinates: offer.location,
     popupNode: offer.title
   }));
 
@@ -24,9 +25,9 @@ export const OfferPage: FC = () => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <NavLink className="header__logo-link" to={'/' + RoutePath.MainPage}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
+              </NavLink>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -175,7 +176,7 @@ export const OfferPage: FC = () => {
             </div>
           </div>
           <MapWidget
-            mapCenter={amsterdamCityCoordinates}
+            mapCenter={currentCity.location}
             mapContainerClassName="offer__map map"
             markers={markers}
           />

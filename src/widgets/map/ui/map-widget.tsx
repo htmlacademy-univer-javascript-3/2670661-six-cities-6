@@ -4,6 +4,7 @@ import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
 import {Coordinates} from '../../../shared/types/coordinates.ts';
 import {activeMarker, defaultMarker} from '../model/markers.ts';
 import {PointOnMap} from '../model/types.ts';
+import {UpdateMapCenter} from './update-map-center.tsx';
 
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 const URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
@@ -19,10 +20,11 @@ export const MapWidget: FC<MapWidgetProps> = ({mapCenter, markers = [], activeMa
   return (
     <MapContainer
       center={[mapCenter.latitude, mapCenter.longitude]}
-      zoom={13}
+      zoom={mapCenter.zoom}
       scrollWheelZoom={true}
       className={mapContainerClassName}
     >
+      <UpdateMapCenter mapCenter={mapCenter}/>
       <TileLayer attribution={ATTRIBUTION} url={URL}/>
       {markers.map(({id: markerId, coordinates, popupNode}) => {
         const isActive = activeMarkers.includes(markerId);
