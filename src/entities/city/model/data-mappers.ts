@@ -7,7 +7,7 @@ export const extractCities = (offers: OfferDto[]): CitiesMap => {
     if (Object.hasOwn(cities, offer.city.name)) {
       return;
     }
-    cities[offer.city.name] = {...offer.city, id: offer.city.name};
+    cities[offer.city.name] = offer.city;
   });
   return cities;
 };
