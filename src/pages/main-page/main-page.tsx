@@ -1,49 +1,25 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect} from 'react';
 import {City} from '../../entities/city/model/types.ts';
 import {CityLinkList} from '../../entities/city/ui/city-link-list.tsx';
-import {Offer} from '../../entities/offer/model/types.ts';
-import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
-import {loadOffers, setActiveOffer, setCity} from '../../features/offers-manager/model/offers-slice.ts';
+import {loadOffers, setCity} from '../../features/offers-manager/model/offers-slice.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {PointOnMap} from '../../widgets/map/model/types.ts';
-import {MapWidget} from '../../widgets/map/ui/map-widget.tsx';
-import {SelectorOption} from '../../widgets/selector/model/types.ts';
-import {SelectorWidget} from '../../widgets/selector/ui/selector-widget.tsx';
-
-const sortOptions: SelectorOption[] = [
-  {key: 'popular', value: 'Popular'},
-  {key: 'price_LtH', value: 'Price: low to high'},
-  {key: 'price_HtL', value: 'Price: high to low'},
-  {key: 'topRated', value: 'Top rated first'},
-];
+import {FullSpaceSpinner} from '../../widgets/spinner/ui/full-space-spinner.tsx';
+import {PlacesContainer} from './places-container.tsx';
 
 export const MainPage: FC = () => {
   const dispatch = useAppDispatch();
+  const isLoading = useAppSelector((state) => state.offers.isOffersLoading);
   const cities = useAppSelector((state) => state.offers.cities);
   const currentCity = useAppSelector((state) => state.offers.currentCity);
-  const offers = useAppSelector((state) => state.offers.currentCityOffers);
-  const activeOfferId = useAppSelector((state) => state.offers.activeOfferId);
-
-  const [sort, setSort] = useState<SelectorOption['key']>(sortOptions[0].key);
 
   const setActiveCity = (city: City) => {
     dispatch(setCity(city));
-  };
-
-  const handleOfferHover = (offerId: Offer['id']) => {
-    dispatch(setActiveOffer(offerId));
   };
 
   useEffect(() => {
     dispatch(loadOffers());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const markers: PointOnMap[] = offers.map((offer) => ({
-    id: offer.id,
-    coordinates: offer.location,
-    popupNode: offer.title
-  }));
 
   return (
     <div className="page page--gray page--main">
@@ -85,30 +61,7 @@ export const MainPage: FC = () => {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {currentCity.name}</b>
-              <SelectorWidget
-                options={sortOptions}
-                activeOptionKey={sort}
-                onSelect={(sortOption) => setSort(sortOption)}
-              >
-                Sort by
-              </SelectorWidget>
-              <OfferCardList
-                offers={offers}
-                containerClassName="cities__places-list places__list tabs__content"
-                onCardHover={handleOfferHover}
-              />
-            </section>
-            <div className="cities__right-section">
-              <MapWidget
-                mapCenter={currentCity.location}
-                markers={markers}
-                activeMarkers={activeOfferId ? [activeOfferId] : []}
-                mapContainerClassName="cities__map map"
-              />
-            </div>
+            {isLoading ? <FullSpaceSpinner/> : <PlacesContainer/>}
           </div>
         </div>
       </main>
