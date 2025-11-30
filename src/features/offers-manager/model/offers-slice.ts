@@ -29,8 +29,7 @@ const initialState: OffersState = {
 export const loadOffers = createAppThunk(ReducerName.offers + '/loadOffers', async (_, thunkApi) => {
   try {
     const response = await thunkApi.extra.axios.get<OfferDto[]>(offersUrl.offers);
-    const cities = extractCities(response.data);
-    return {cities, offers: groupOffersByCity(response.data.map(mapDtoToOffer))};
+    return response.data;
   } catch (error) {
     return thunkApi.rejectWithValue(error);
   }
@@ -53,10 +52,11 @@ export const offersSlice = createSlice({
     builder.addCase(loadOffers.pending, (state) => {
       state.isOffersLoading = true;
     }).addCase(loadOffers.fulfilled, (state, action) => {
+      const offers = groupOffersByCity(action.payload.map(mapDtoToOffer));
       state.isOffersLoading = false;
-      state.cities = action.payload.cities;
-      state.offers = action.payload.offers;
-      state.currentCityOffers = action.payload.offers[state.currentCity.name] ?? [];
+      state.cities = extractCities(action.payload);
+      state.offers = offers;
+      state.currentCityOffers = offers[state.currentCity.name] ?? [];
     }).addCase(loadOffers.rejected, (state) => {
       state.isOffersLoading = false;
     });
