@@ -1,12 +1,21 @@
 import {FC} from 'react';
-import {Offer} from '../../entities/offer/model/types.ts';
-import {FavouriteOfferCardList} from './cards/favourite-offer-card-list.tsx';
+import {OffersByCity} from '../../entities/offer/model/types.ts';
+import {useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
+import {FavoriteOfferCardList} from './cards/favorite-offer-card-list.tsx';
 
-type FavouritesPageProps = {
-  offers: Offer[];
-};
 
-export const FavouritesPage: FC<FavouritesPageProps> = ({offers}) => {
+export const FavoritesPage: FC = () => {
+  const offers = useAppSelector((state) => state.offers.offers);
+
+  let favoritesCounter = 0;
+  const favorites: OffersByCity = Object.entries(structuredClone(offers)).reduce((
+    favByCity, [city, cityOffers]
+  ) => {
+    favByCity[city] = cityOffers.filter((offer) => offer.isFavorite);
+    favoritesCounter += favByCity[city].length;
+    return favByCity;
+  }, {} as OffersByCity);
+
   return (
     <div className="page">
       <header className="header">
@@ -42,7 +51,8 @@ export const FavouritesPage: FC<FavouritesPageProps> = ({offers}) => {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavouriteOfferCardList offers={offers}/>
+            {favoritesCounter === 0 && <p>You have not bookmarked any offers yet</p>}
+            <FavoriteOfferCardList offers={favorites}/>
           </section>
         </div>
       </main>
