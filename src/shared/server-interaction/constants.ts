@@ -10,6 +10,7 @@ export const axiosClient = axios.create({
 export const offersUrl = {
   offers: '/offers',
   offer: (offerId: string) => '/offers/' + offerId,
+  nearby: (offerId: string) => `/offers/${offerId}/nearby`,
 };
 
 export const userUrl = {

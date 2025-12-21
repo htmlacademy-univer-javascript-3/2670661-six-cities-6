@@ -2,7 +2,7 @@ import {FC, useEffect} from 'react';
 import {Navigate, useParams} from 'react-router-dom';
 import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
 import {ReviewList} from '../../entities/review/ui/review-list.tsx';
-import {loadOffer} from '../../features/offers-manager/model/offer-page-slice.ts';
+import {loadNearbyOffers, loadOffer} from '../../features/offers-manager/model/offer-page-slice.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {reviewsMock} from '../../shared/mocks/reviews.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
@@ -16,23 +16,23 @@ export const OfferPage: FC = () => {
   const dispatch = useAppDispatch();
   const {id: offerId = ''} = useParams();
   const offerData = useAppSelector((state) => state.offerPage.offerData);
+  const nearbyOffers = useAppSelector((state) => state.offerPage.nearbyOffers).slice(0, 6);
   const loadError = useAppSelector((state) => state.offerPage.offersLoadingError);
+  const loadErrorNearby = useAppSelector((state) => state.offerPage.nearbyLoadingError);
 
   useEffect(() => {
     dispatch(loadOffer(offerId));
+    dispatch(loadNearbyOffers(offerId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offerId]);
 
-  const currentCity = useAppSelector((state) => state.offers.currentCity);
-  const offers = useAppSelector((state) => state.offers.currentCityOffers);
-  const neighbourhoodPlaces = offers.slice(0, 3);
-  const markers: PointOnMap[] = neighbourhoodPlaces.map((offer) => ({
+  const markers: PointOnMap[] = nearbyOffers.map((offer) => ({
     id: offer.id,
     coordinates: offer.location,
     popupNode: offer.title
   }));
 
-  if (loadError) {
+  if (loadError || loadErrorNearby) {
     return <Navigate to={'/' + RoutePath.Page404}/>;
   }
 
@@ -137,15 +137,16 @@ export const OfferPage: FC = () => {
             </div>
           </div>
           <MapWidget
-            mapCenter={currentCity.location}
+            mapCenter={{...offerData.location, zoom: 14}}
             mapContainerClassName="offer__map map"
             markers={markers}
+            scrollWheelZoom={false}
           />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OfferCardList offers={neighbourhoodPlaces} containerClassName="near-places__list places__list"/>
+            <OfferCardList offers={nearbyOffers} containerClassName="near-places__list places__list"/>
           </section>
         </div>
       </main>
