@@ -1,3 +1,4 @@
 export enum ReducerName {
-  offers = 'offers'
+  currentUser = 'currentUser',
+  offers = 'offers',
 }

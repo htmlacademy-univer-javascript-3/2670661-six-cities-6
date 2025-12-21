@@ -1,8 +1,7 @@
 import {FC} from 'react';
-import {NavLink} from 'react-router-dom';
 import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
 import {ReviewList} from '../../entities/review/ui/review-list.tsx';
-import {RoutePath} from '../../shared/enums/routes.ts';
+import {HeaderLogoLink} from '../../shared/components/header-logo-link.tsx';
 import {reviewsMock} from '../../shared/mocks/reviews.ts';
 import {useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {PointOnMap} from '../../widgets/map/model/types.ts';
@@ -25,9 +24,7 @@ export const OfferPage: FC = () => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <NavLink className="header__logo-link" to={'/' + RoutePath.MainPage}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </NavLink>
+              <HeaderLogoLink/>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">

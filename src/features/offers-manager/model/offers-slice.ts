@@ -12,6 +12,7 @@ type OffersState = {
   cities: CitiesMap;
   currentCity: City;
   offers: OffersByCity;
+  favoriteOffersCount: number;
   currentCityOffers: Offer[];
   activeOfferId: Offer['id'] | null;
   isOffersLoading: boolean;
@@ -21,6 +22,7 @@ const initialState: OffersState = {
   cities: {},
   currentCity: DEFAULT_CITY,
   offers: {},
+  favoriteOffersCount: 0,
   currentCityOffers: [],
   activeOfferId: null,
   isOffersLoading: false,
@@ -56,6 +58,7 @@ export const offersSlice = createSlice({
       state.isOffersLoading = false;
       state.cities = extractCities(action.payload);
       state.offers = offers;
+      state.favoriteOffersCount = action.payload.filter((offer) => offer.isFavorite).length;
       state.currentCityOffers = offers[state.currentCity.name] ?? [];
     }).addCase(loadOffers.rejected, (state) => {
       state.isOffersLoading = false;
