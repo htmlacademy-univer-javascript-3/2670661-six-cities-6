@@ -9,6 +9,7 @@ export const axiosClient = axios.create({
 
 export const offersUrl = {
   offers: '/offers',
+  offer: (offerId: string) => '/offers/' + offerId,
 };
 
 export const userUrl = {

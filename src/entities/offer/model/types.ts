@@ -1,11 +1,6 @@
 import {Coordinates} from '../../../shared/types/coordinates.ts';
 
-export enum PlaceType {
-  Room = 'Room',
-  Apartment = 'Apartment',
-}
-
-export type OfferDto = {
+type OfferCommonDto = {
   id: string;
   title: string;
   type: string;
@@ -26,8 +21,27 @@ export type OfferDto = {
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
-  previewImage: string;
-}
+};
+
+export type OfferDto = OfferCommonDto & {previewImage: string};
+
+export type OfferExtendedDto = OfferCommonDto & {
+  description: string;
+  bedrooms: number;
+  goods: [string];
+  host: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  images: [string];
+  maxAdults: number;
+};
+
+export type OfferErrorResultDto = {
+  errorType: string;
+  message: string;
+};
 
 export type Offer = {
   id: OfferDto['id'];
@@ -40,6 +54,6 @@ export type Offer = {
   isFavorite: OfferDto['isFavorite'];
   rating: OfferDto['rating'];
   previewImage: OfferDto['previewImage'];
-}
+};
 
 export type OffersByCity = Record<Offer['city'], Offer[]>;

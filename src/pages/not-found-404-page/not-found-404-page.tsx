@@ -6,7 +6,7 @@ export const NotFound404Page = () => {
     <div className="page">
       <h1>404 Not Found :(</h1>
       <NavLink
-        to={RoutePath.MainPage}
+        to={'/' + RoutePath.MainPage}
         className="locations__item-link tabs__item tabs__item--active"
       >
         На главную
