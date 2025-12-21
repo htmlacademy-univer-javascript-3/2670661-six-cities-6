@@ -10,3 +10,7 @@ export const axiosClient = axios.create({
 export const offersUrl = {
   offers: '/offers',
 };
+
+export const userUrl = {
+  login: '/login',
+};

@@ -15,7 +15,7 @@ export const App: FC = () => {
       <Routes>
         <Route index element={<MainPage/>}/>
         <Route path={RoutePath.LoginPage} element={<LoginPage/>}/>
-        <Route path={RoutePath.FavoritesPage} element={<PrivateRoute isAuthorized={true}/>}>
+        <Route path={RoutePath.FavoritesPage} element={<PrivateRoute/>}>
           <Route path="" element={<FavoritesPage/>}/>
         </Route>
         <Route path={RoutePath.OfferPage} element={<OfferPage/>}>

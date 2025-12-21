@@ -4,6 +4,7 @@ import {CityLinkList} from '../../entities/city/ui/city-link-list.tsx';
 import {loadOffers, setCity} from '../../features/offers-manager/model/offers-slice.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {FullSpaceSpinner} from '../../widgets/spinner/ui/full-space-spinner.tsx';
+import {HeaderUserInfo} from '../../widgets/common-components/header-user-info.tsx';
 import {PlacesContainer} from './places-container.tsx';
 
 export const MainPage: FC = () => {
@@ -31,23 +32,7 @@ export const MainPage: FC = () => {
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </a>
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <HeaderUserInfo/>
           </div>
         </div>
       </header>
