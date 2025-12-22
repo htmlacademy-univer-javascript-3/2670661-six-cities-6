@@ -38,11 +38,6 @@ export type OfferExtendedDto = OfferCommonDto & {
   maxAdults: number;
 };
 
-export type OfferErrorResultDto = {
-  errorType: string;
-  message: string;
-};
-
 export type Offer = {
   id: OfferDto['id'];
   title: OfferDto['title'];

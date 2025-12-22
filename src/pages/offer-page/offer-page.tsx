@@ -131,7 +131,7 @@ export const OfferPage: FC = () => {
               </div>
               <section className="offer__reviews reviews">
                 <CommentsList/>
-                <FeedbackForm/>
+                <FeedbackForm offerId={offerId}/>
               </section>
             </div>
           </div>

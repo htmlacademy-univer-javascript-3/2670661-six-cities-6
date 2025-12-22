@@ -1,27 +1,34 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AxiosError} from 'axios';
-import {CommentaryDto} from '../../../entities/commentary/model/types.ts';
+import {AddCommentaryRequestBody, CommentaryDto} from '../../../entities/commentary/model/types.ts';
+import {ErrorDto, ValidationErrorDto} from '../../../entities/error/model/types.ts';
 import {mapDtoToOffer} from '../../../entities/offer/model/data-mappers.ts';
-import {Offer, OfferDto, OfferErrorResultDto, OfferExtendedDto} from '../../../entities/offer/model/types.ts';
+import {Offer, OfferDto, OfferExtendedDto} from '../../../entities/offer/model/types.ts';
 import {ReducerName} from '../../../shared/enums/reducer-names.ts';
 import {createAppThunk} from '../../../shared/redux-helpers/typed-thunk.ts';
 import {commentsUrl, offersUrl} from '../../../shared/server-interaction/constants.ts';
+import {RequestStatus} from '../../../shared/server-interaction/request-status.ts';
 
-type OffersState = {
+type AddCommentActionPayload = AddCommentaryRequestBody & {offerId: string};
+
+type OffersPageState = {
   isOfferLoading: boolean;
   offerData: OfferExtendedDto | null;
-  offersLoadingError: OfferErrorResultDto | null;
+  offersLoadingError: ErrorDto | null;
 
   isNearbyLoading: boolean;
   nearbyOffers: Offer[];
-  nearbyLoadingError: OfferErrorResultDto | null;
+  nearbyLoadingError: ErrorDto | null;
 
   isCommentsLoading: boolean;
   comments: CommentaryDto[];
-  commentsLoadingError: OfferErrorResultDto | null;
+  commentsLoadingError: ErrorDto | null;
+
+  commentPostingState: RequestStatus;
+  commentPostingError: ErrorDto | ValidationErrorDto | null;
 };
 
-const initialState: OffersState = {
+const initialState: OffersPageState = {
   isOfferLoading: false,
   offerData: null,
   offersLoadingError: null,
@@ -33,6 +40,9 @@ const initialState: OffersState = {
   isCommentsLoading: false,
   comments: [],
   commentsLoadingError: null,
+
+  commentPostingState: RequestStatus.idle,
+  commentPostingError: null,
 };
 
 export const loadOffer = createAppThunk(ReducerName.offerPage + '/loadOffer', async (offerId: string, thunkApi) => {
@@ -62,10 +72,33 @@ export const loadComments = createAppThunk(ReducerName.offerPage + '/loadComment
   }
 });
 
+export const addComment = createAppThunk(
+  ReducerName.offerPage + '/addComment',
+  async ({offerId, ...body}: AddCommentActionPayload, thunkApi) => {
+    try {
+      const response = await thunkApi.extra.axios.post<CommentaryDto>(
+        commentsUrl.addComment(offerId),
+        body satisfies AddCommentaryRequestBody,
+      );
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
 export const offerPageSlice = createSlice({
   name: ReducerName.offerPage,
   initialState,
-  reducers: {},
+  reducers: {
+    resetCommentPostingState: (state: OffersPageState) => {
+      state.commentPostingState = RequestStatus.idle;
+      state.commentPostingError = null;
+    },
+    handleCommentPostingResult: (state: OffersPageState) => {
+      state.commentPostingState = RequestStatus.idle;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loadOffer.pending, (state) => {
       state.isOfferLoading = true;
@@ -75,9 +108,9 @@ export const offerPageSlice = createSlice({
       state.isOfferLoading = false;
       state.offerData = action.payload;
     }).addCase(loadOffer.rejected, (state, {payload}) => {
-      const error = (payload as AxiosError<OfferErrorResultDto>).response?.data;
+      const error = (payload as AxiosError<ErrorDto>).response?.data;
       state.isOfferLoading = false;
-      state.offersLoadingError = error as OfferErrorResultDto;
+      state.offersLoadingError = error as ErrorDto;
     }).addCase(loadNearbyOffers.pending, (state) => {
       state.isNearbyLoading = true;
       state.nearbyOffers = [];
@@ -86,9 +119,9 @@ export const offerPageSlice = createSlice({
       state.isNearbyLoading = false;
       state.nearbyOffers = action.payload.map(mapDtoToOffer);
     }).addCase(loadNearbyOffers.rejected, (state, {payload}) => {
-      const error = (payload as AxiosError<OfferErrorResultDto>).response?.data;
+      const error = (payload as AxiosError<ErrorDto>).response?.data;
       state.isNearbyLoading = false;
-      state.nearbyLoadingError = error as OfferErrorResultDto;
+      state.nearbyLoadingError = error as ErrorDto;
     }).addCase(loadComments.pending, (state) => {
       state.isCommentsLoading = true;
       state.comments = [];
@@ -97,11 +130,22 @@ export const offerPageSlice = createSlice({
       state.isCommentsLoading = false;
       state.comments = action.payload;
     }).addCase(loadComments.rejected, (state, {payload}) => {
-      const error = (payload as AxiosError<OfferErrorResultDto>).response?.data;
+      const error = (payload as AxiosError<ErrorDto>).response?.data;
       state.isCommentsLoading = false;
-      state.commentsLoadingError = error as OfferErrorResultDto;
+      state.commentsLoadingError = error as ErrorDto;
+    }).addCase(addComment.pending, (state) => {
+      state.commentPostingState = RequestStatus.pending;
+      state.commentPostingError = null;
+    }).addCase(addComment.fulfilled, (state, action) => {
+      state.commentPostingState = RequestStatus.success;
+      state.comments.push(action.payload);
+    }).addCase(addComment.rejected, (state, {payload}) => {
+      state.commentPostingState = RequestStatus.failure;
+      const error = (payload as AxiosError<ErrorDto | ValidationErrorDto>).response?.data;
+      state.commentPostingError = error as ErrorDto | ValidationErrorDto;
     });
   },
 });
 
 export const offerPageReducer = offerPageSlice.reducer;
+export const {resetCommentPostingState, handleCommentPostingResult} = offerPageSlice.actions;

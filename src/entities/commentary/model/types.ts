@@ -9,3 +9,8 @@ export type CommentaryDto = {
   comment: string;
   rating: number;
 };
+
+export type AddCommentaryRequestBody = {
+  comment: string;
+  rating: number;
+};
