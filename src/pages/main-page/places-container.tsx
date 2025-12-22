@@ -1,7 +1,8 @@
 import {FC} from 'react';
+import {DEFAULT_CITY} from '../../entities/city/model/constants.ts';
+import {OfferSortOption} from '../../entities/offer/model/constants.ts';
 import {Offer} from '../../entities/offer/model/types.ts';
 import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
-import {OfferSortOption} from '../../entities/offer/model/constants.ts';
 import {setActiveOffer, setOffersSort} from '../../features/offers-manager/model/offers-slice.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {PointOnMap} from '../../widgets/map/model/types.ts';
@@ -18,7 +19,7 @@ const sortOptions: SelectorOption[] = [
 
 export const PlacesContainer: FC = () => {
   const dispatch = useAppDispatch();
-  const currentCity = useAppSelector((state) => state.offers.currentCity);
+  const currentCity = useAppSelector((state) => state.offers.cities[state.offers.currentCity]) ?? DEFAULT_CITY;
   const offers = useAppSelector((state) => state.offers.currentCityOffers);
   const activeOfferId = useAppSelector((state) => state.offers.activeOfferId);
   const sort = useAppSelector((state) => state.offers.sortOption);

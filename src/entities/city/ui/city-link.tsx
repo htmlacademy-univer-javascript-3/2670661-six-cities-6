@@ -1,14 +1,16 @@
 import {FC} from 'react';
+import {NavLink} from 'react-router-dom';
+import {RoutePath} from '../../../shared/enums/routes.ts';
+import {CITY_SEARCH_PARAM} from '../model/constants.ts';
 import {City} from '../model/types.ts';
 
 type CityLinkProps = {
   city: City;
-  href: string;
   isActive?: boolean;
   onCityClick?: (city: City) => void;
 };
 
-export const CityLink: FC<CityLinkProps> = ({city, href, onCityClick, isActive = false}) => {
+export const CityLink: FC<CityLinkProps> = ({city, onCityClick, isActive = false}) => {
   const linkClassName: string[] = ['locations__item-link tabs__item'];
   if (isActive) {
     linkClassName.push('tabs__item--active');
@@ -16,9 +18,16 @@ export const CityLink: FC<CityLinkProps> = ({city, href, onCityClick, isActive =
 
   return (
     <li className="locations__item">
-      <a className={linkClassName.join(' ')} href={href} onClick={() => onCityClick?.(city)}>
+      <NavLink
+        className={linkClassName.join(' ')}
+        to={{
+          pathname: '/' + RoutePath.MainPage,
+          search: `?${CITY_SEARCH_PARAM}=${city.name}`,
+        }}
+        onClick={() => onCityClick?.(city)}
+      >
         <span>{city.name}</span>
-      </a>
+      </NavLink>
     </li>
   );
 };

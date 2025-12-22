@@ -14,6 +14,7 @@ import {OfferPageWrapper} from './offer-page-wrapper.tsx';
 export const OfferPage: FC = () => {
   const dispatch = useAppDispatch();
   const {id: offerId = ''} = useParams();
+  const isAuthorized = useAppSelector((state) => !!state.currentUser.userData);
   const offerData = useAppSelector((state) => state.offerPage.offerData);
   const nearbyOffers = useAppSelector((state) => state.offerPage.nearbyOffers).slice(0, 6);
   const loadError = useAppSelector((state) => state.offerPage.offersLoadingError);
@@ -131,7 +132,7 @@ export const OfferPage: FC = () => {
               </div>
               <section className="offer__reviews reviews">
                 <CommentsList/>
-                <FeedbackForm offerId={offerId}/>
+                {isAuthorized && <FeedbackForm offerId={offerId}/>}
               </section>
             </div>
           </div>
