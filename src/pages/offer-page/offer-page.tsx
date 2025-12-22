@@ -1,14 +1,13 @@
 import {FC, useEffect} from 'react';
 import {Navigate, useParams} from 'react-router-dom';
 import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
-import {ReviewList} from '../../entities/review/ui/review-list.tsx';
 import {loadNearbyOffers, loadOffer} from '../../features/offers-manager/model/offer-page-slice.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
-import {reviewsMock} from '../../shared/mocks/reviews.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {PointOnMap} from '../../widgets/map/model/types.ts';
 import {MapWidget} from '../../widgets/map/ui/map-widget.tsx';
 import {Spinner} from '../../widgets/spinner/ui/spinner.tsx';
+import {CommentsList} from './comments-list.tsx';
 import {FeedbackForm} from './feedback-form.tsx';
 import {OfferPageWrapper} from './offer-page-wrapper.tsx';
 
@@ -131,7 +130,7 @@ export const OfferPage: FC = () => {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <ReviewList reviews={reviewsMock}/>
+                <CommentsList/>
                 <FeedbackForm/>
               </section>
             </div>

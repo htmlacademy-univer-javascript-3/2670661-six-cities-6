@@ -1,10 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AxiosError} from 'axios';
+import {CommentaryDto} from '../../../entities/commentary/model/types.ts';
 import {mapDtoToOffer} from '../../../entities/offer/model/data-mappers.ts';
 import {Offer, OfferDto, OfferErrorResultDto, OfferExtendedDto} from '../../../entities/offer/model/types.ts';
 import {ReducerName} from '../../../shared/enums/reducer-names.ts';
 import {createAppThunk} from '../../../shared/redux-helpers/typed-thunk.ts';
-import {offersUrl} from '../../../shared/server-interaction/constants.ts';
+import {commentsUrl, offersUrl} from '../../../shared/server-interaction/constants.ts';
 
 type OffersState = {
   isOfferLoading: boolean;
@@ -14,6 +15,10 @@ type OffersState = {
   isNearbyLoading: boolean;
   nearbyOffers: Offer[];
   nearbyLoadingError: OfferErrorResultDto | null;
+
+  isCommentsLoading: boolean;
+  comments: CommentaryDto[];
+  commentsLoadingError: OfferErrorResultDto | null;
 };
 
 const initialState: OffersState = {
@@ -24,6 +29,10 @@ const initialState: OffersState = {
   isNearbyLoading: false,
   nearbyOffers: [],
   nearbyLoadingError: null,
+
+  isCommentsLoading: false,
+  comments: [],
+  commentsLoadingError: null,
 };
 
 export const loadOffer = createAppThunk(ReducerName.offerPage + '/loadOffer', async (offerId: string, thunkApi) => {
@@ -38,6 +47,15 @@ export const loadOffer = createAppThunk(ReducerName.offerPage + '/loadOffer', as
 export const loadNearbyOffers = createAppThunk(ReducerName.offerPage + '/loadNearby', async (offerId: string, thunkApi) => {
   try {
     const response = await thunkApi.extra.axios.get<OfferDto[]>(offersUrl.nearby(offerId));
+    return response.data;
+  } catch (error) {
+    return thunkApi.rejectWithValue(error);
+  }
+});
+
+export const loadComments = createAppThunk(ReducerName.offerPage + '/loadComments', async (offerId: string, thunkApi) => {
+  try {
+    const response = await thunkApi.extra.axios.get<CommentaryDto[]>(commentsUrl.comments(offerId));
     return response.data;
   } catch (error) {
     return thunkApi.rejectWithValue(error);
@@ -71,9 +89,19 @@ export const offerPageSlice = createSlice({
       const error = (payload as AxiosError<OfferErrorResultDto>).response?.data;
       state.isNearbyLoading = false;
       state.nearbyLoadingError = error as OfferErrorResultDto;
+    }).addCase(loadComments.pending, (state) => {
+      state.isCommentsLoading = true;
+      state.comments = [];
+      state.commentsLoadingError = null;
+    }).addCase(loadComments.fulfilled, (state, action) => {
+      state.isCommentsLoading = false;
+      state.comments = action.payload;
+    }).addCase(loadComments.rejected, (state, {payload}) => {
+      const error = (payload as AxiosError<OfferErrorResultDto>).response?.data;
+      state.isCommentsLoading = false;
+      state.commentsLoadingError = error as OfferErrorResultDto;
     });
   },
 });
 
 export const offerPageReducer = offerPageSlice.reducer;
-// export const {setCity, setActiveOffer} = offerPageSlice.actions;

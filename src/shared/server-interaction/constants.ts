@@ -16,3 +16,8 @@ export const offersUrl = {
 export const userUrl = {
   login: '/login',
 };
+
+export const commentsUrl = {
+  comments: (offerId: string) => '/comments/' + offerId,
+  addComment: (offerId: string) => '/comments/' + offerId,
+};
