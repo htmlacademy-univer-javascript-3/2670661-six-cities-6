@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import {CitiesMap, City} from '../model/types.ts';
 import {CityLink} from './city-link.tsx';
 
@@ -8,7 +8,7 @@ type CityLinkListProps = {
   onCityClick: (city: City) => void;
 };
 
-export const CityLinkList: FC<CityLinkListProps> = ({cities, activeCityName, onCityClick}) => {
+export const CityLinkList: FC<CityLinkListProps> = React.memo(({cities, activeCityName, onCityClick}) => {
   return (
     <ul className="locations__list tabs__list">
       {Object.values(cities).map((city) => (
@@ -21,4 +21,6 @@ export const CityLinkList: FC<CityLinkListProps> = ({cities, activeCityName, onC
       ))}
     </ul>
   );
-};
+});
+
+CityLinkList.displayName = 'CityLinkList';

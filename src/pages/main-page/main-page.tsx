@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC, useCallback, useEffect} from 'react';
 import {useSearchParams} from 'react-router-dom';
 import {CITY_SEARCH_PARAM} from '../../entities/city/model/constants.ts';
 import {City} from '../../entities/city/model/types.ts';
@@ -18,9 +18,9 @@ export const MainPage: FC = () => {
   const cities = useAppSelector((state) => state.offers.cities);
   const currentCity = useAppSelector((state) => state.offers.currentCity);
 
-  const setActiveCity = (city: City) => {
+  const setActiveCity = useCallback((city: City) => {
     dispatch(setCity(city.name));
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(loadOffers());

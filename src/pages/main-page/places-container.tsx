@@ -1,14 +1,13 @@
-import {FC} from 'react';
+import React, {FC, useCallback} from 'react';
 import {DEFAULT_CITY} from '../../entities/city/model/constants.ts';
 import {OfferSortOption} from '../../entities/offer/model/constants.ts';
 import {Offer} from '../../entities/offer/model/types.ts';
 import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
 import {setActiveOffer, setOffersSort} from '../../features/offers-manager/model/offers-slice.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {PointOnMap} from '../../widgets/map/model/types.ts';
-import {MapWidget} from '../../widgets/map/ui/map-widget.tsx';
 import {SelectorOption} from '../../widgets/selector/model/types.ts';
 import {SelectorWidget} from '../../widgets/selector/ui/selector-widget.tsx';
+import {MapWrapper} from './map-wrapper.tsx';
 
 const sortOptions: SelectorOption[] = [
   {key: OfferSortOption.popular, value: 'Popular'},
@@ -17,26 +16,19 @@ const sortOptions: SelectorOption[] = [
   {key: OfferSortOption.topRated, value: 'Top rated first'},
 ] satisfies Array<{key: OfferSortOption; value: string}>;
 
-export const PlacesContainer: FC = () => {
+export const PlacesContainer: FC = React.memo(() => {
   const dispatch = useAppDispatch();
   const currentCity = useAppSelector((state) => state.offers.cities[state.offers.currentCity]) ?? DEFAULT_CITY;
   const offers = useAppSelector((state) => state.offers.currentCityOffers);
-  const activeOfferId = useAppSelector((state) => state.offers.activeOfferId);
   const sort = useAppSelector((state) => state.offers.sortOption);
 
-  const handleOfferHover = (offerId: Offer['id']) => {
+  const handleOfferHover = useCallback((offerId: Offer['id']) => {
     dispatch(setActiveOffer(offerId));
-  };
+  }, [dispatch]);
 
-  const handleChangeSort = (sortOption: SelectorOption['key']) => {
+  const handleChangeSort = useCallback((sortOption: SelectorOption['key']) => {
     dispatch(setOffersSort(sortOption as OfferSortOption));
-  };
-
-  const markers: PointOnMap[] = offers.map((offer) => ({
-    id: offer.id,
-    coordinates: offer.location,
-    popupNode: offer.title
-  }));
+  }, [dispatch]);
 
   return (
     <>
@@ -57,13 +49,10 @@ export const PlacesContainer: FC = () => {
         />
       </section>
       <div className="cities__right-section">
-        <MapWidget
-          mapCenter={currentCity.location}
-          markers={markers}
-          activeMarkers={activeOfferId ? [activeOfferId] : []}
-          mapContainerClassName="cities__map map"
-        />
+        <MapWrapper/>
       </div>
     </>
   );
-};
+});
+
+PlacesContainer.displayName = 'PlacesContainer';

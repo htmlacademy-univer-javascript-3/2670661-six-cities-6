@@ -1,4 +1,4 @@
-import {FC, MouseEventHandler, ReactNode, useRef, useState} from 'react';
+import React, {FC, MouseEventHandler, ReactNode, useRef, useState} from 'react';
 import {useOutsideClick} from '../../../shared/utils/hooks/use-outside-click.ts';
 import {SelectorOption} from '../model/types.ts';
 
@@ -12,7 +12,7 @@ type SelectorWidgetProps = {
 const optionClasses = 'places__option';
 const activeOptionClasses = `${optionClasses} places__option--active`;
 
-export const SelectorWidget: FC<SelectorWidgetProps> = ({options, activeOptionKey, children, onSelect}) => {
+export const SelectorWidget: FC<SelectorWidgetProps> = React.memo(({options, activeOptionKey, children, onSelect}) => {
   const expandRef = useRef<HTMLUListElement | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -55,5 +55,6 @@ export const SelectorWidget: FC<SelectorWidgetProps> = ({options, activeOptionKe
       )}
     </form>
   );
-};
+});
 
+SelectorWidget.displayName = 'SelectorWidget';
