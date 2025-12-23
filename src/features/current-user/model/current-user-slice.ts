@@ -6,12 +6,14 @@ import {createAppThunk} from '../../../shared/redux-helpers/typed-thunk.ts';
 import {userUrl} from '../../../shared/server-interaction/constants.ts';
 
 type CurrentUserState = {
+  isLogoutPending: boolean;
   isAuthInPending: boolean;
   authorizationError: string | null;
   userData: UserData | null;
 };
 
 const initialState: CurrentUserState = {
+  isLogoutPending: false,
   isAuthInPending: false,
   authorizationError: null,
   userData: null,
@@ -29,14 +31,19 @@ export const userLogin = createAppThunk(
   }
 );
 
+export const userLogout = createAppThunk(ReducerName.currentUser + '/logout', async (_, thunkApi) => {
+  try {
+    const response = await thunkApi.extra.axios.delete<void>(userUrl.logout);
+    return response.data;
+  } catch (error) {
+    return thunkApi.rejectWithValue(error);
+  }
+});
+
 export const currentUserSlice = createSlice({
   name: ReducerName.offers,
   initialState,
-  reducers: {
-    logout: (state: CurrentUserState) => {
-      state.userData = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(userLogin.pending, (state) => {
       state.isAuthInPending = true;
@@ -49,9 +56,15 @@ export const currentUserSlice = createSlice({
       const error = (payload as AxiosError<AuthErrorResultDto>)?.response?.data?.details[0].messages[0] ?? 'Some error occurred';
       state.isAuthInPending = false;
       state.authorizationError = error;
+    }).addCase(userLogout.pending, (state) => {
+      state.isLogoutPending = true;
+      state.userData = null;
+    }).addCase(userLogout.fulfilled, (state) => {
+      state.isLogoutPending = false;
+    }).addCase(userLogout.rejected, (state) => {
+      state.isLogoutPending = false;
     });
   },
 });
 
 export const currentUserReducer = currentUserSlice.reducer;
-export const {logout} = currentUserSlice.actions;

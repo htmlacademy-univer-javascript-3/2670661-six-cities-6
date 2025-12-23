@@ -15,6 +15,7 @@ export const offersUrl = {
 
 export const userUrl = {
   login: '/login',
+  logout: '/logout',
 };
 
 export const commentsUrl = {
