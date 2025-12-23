@@ -1,0 +1,28 @@
+import React, {FC, useMemo} from 'react';
+import {DEFAULT_CITY} from '../../entities/city/model/constants.ts';
+import {useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
+import {PointOnMap} from '../../widgets/map/model/types.ts';
+import {MapWidget} from '../../widgets/map/ui/map-widget.tsx';
+
+export const MapWrapper: FC = React.memo(() => {
+  const currentCity = useAppSelector((state) => state.offers.cities[state.offers.currentCity]) ?? DEFAULT_CITY;
+  const offers = useAppSelector((state) => state.offers.currentCityOffers);
+  const activeOfferId = useAppSelector((state) => state.offers.activeOfferId);
+
+  const markers: PointOnMap[] = useMemo(() => offers.map((offer) => ({
+    id: offer.id,
+    coordinates: offer.location,
+    popupNode: offer.title
+  })), [offers]);
+
+  return (
+    <MapWidget
+      mapCenter={currentCity.location}
+      markers={markers}
+      activeMarkers={activeOfferId ? [activeOfferId] : []}
+      mapContainerClassName="cities__map map"
+    />
+  );
+});
+
+MapWrapper.displayName = 'MapWrapper';

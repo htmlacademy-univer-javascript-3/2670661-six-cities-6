@@ -1,10 +1,10 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import {NavLink} from 'react-router-dom';
 import {userLogout} from '../../features/current-user/model/current-user-slice.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 
-export const HeaderUserInfo: FC = () => {
+export const HeaderUserInfo: FC = React.memo(() => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state) => state.currentUser.userData);
   const favoriteOffersCount = useAppSelector((state) => state.offers.favoriteOffersCount);
@@ -41,4 +41,6 @@ export const HeaderUserInfo: FC = () => {
       </ul>
     </nav>
   );
-};
+});
+
+HeaderUserInfo.displayName = 'HeaderUserInfo';

@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import {Offer} from '../model/types.ts';
 import {OfferCard} from './offer-card.tsx';
 
@@ -8,7 +8,7 @@ type OfferCardsProps = {
   onCardHover?: (offerId: Offer['id']) => void;
 };
 
-export const OfferCardList: FC<OfferCardsProps> = ({offers, containerClassName, onCardHover}) => {
+export const OfferCardList: FC<OfferCardsProps> = React.memo(({offers, containerClassName, onCardHover}) => {
   return (
     <div className={containerClassName}>
       {offers.map((offer) =>
@@ -16,5 +16,6 @@ export const OfferCardList: FC<OfferCardsProps> = ({offers, containerClassName, 
       )}
     </div>
   );
-};
+});
 
+OfferCardList.displayName = 'OfferCardList';
