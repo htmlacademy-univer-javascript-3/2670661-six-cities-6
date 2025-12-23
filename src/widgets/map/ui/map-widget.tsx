@@ -14,14 +14,20 @@ type MapWidgetProps = {
   markers?: PointOnMap[];
   activeMarkers?: PointOnMap['id'][];
   mapContainerClassName?: string;
+  scrollWheelZoom?: boolean;
 };
 
-export const MapWidget: FC<MapWidgetProps> = ({mapCenter, markers = [], activeMarkers = [], mapContainerClassName}) => {
+export const MapWidget: FC<MapWidgetProps> = ({
+  mapCenter, markers = [],
+  activeMarkers = [],
+  mapContainerClassName,
+  scrollWheelZoom = true,
+}) => {
   return (
     <MapContainer
       center={[mapCenter.latitude, mapCenter.longitude]}
       zoom={mapCenter.zoom}
-      scrollWheelZoom={true}
+      scrollWheelZoom={scrollWheelZoom}
       className={mapContainerClassName}
     >
       <UpdateMapCenter mapCenter={mapCenter}/>

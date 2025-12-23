@@ -14,7 +14,7 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': 'warn',
-    'arrow-body-style': 'warn',
+    'arrow-body-style': 'off',
     'react/jsx-boolean-value': 'off',
     'prefer-template': 'off',
   },

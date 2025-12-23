@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {NavLink} from 'react-router-dom';
-import {logout} from '../../features/current-user/model/current-user-slice.ts';
+import {userLogout} from '../../features/current-user/model/current-user-slice.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 
@@ -10,7 +10,7 @@ export const HeaderUserInfo: FC = () => {
   const favoriteOffersCount = useAppSelector((state) => state.offers.favoriteOffersCount);
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(userLogout());
   };
 
   return (

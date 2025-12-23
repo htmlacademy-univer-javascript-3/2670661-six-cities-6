@@ -22,6 +22,7 @@ export const App: FC = () => {
           <Route path=":id" element={<OfferPage/>}/>
         </Route>
         <Route path={RoutePath.PropertyPage} element={<PropertyPage/>}/>
+        <Route path={RoutePath.Page404} element={<NotFound404Page/>}/>
         <Route path="*" element={<NotFound404Page/>}/>
       </Routes>
     </BrowserRouter>

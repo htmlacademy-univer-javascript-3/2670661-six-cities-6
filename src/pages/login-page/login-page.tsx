@@ -1,8 +1,10 @@
 import {FC} from 'react';
-import {Navigate} from 'react-router-dom';
+import {Navigate, NavLink} from 'react-router-dom';
+import {cities, CITY_SEARCH_PARAM} from '../../entities/city/model/constants.ts';
 import {HeaderLogoLink} from '../../shared/components/header-logo-link.tsx';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
+import {getRandomInt} from '../../shared/utils/math-utils.ts';
 import {LoginForm} from './login-form.tsx';
 
 export const LoginPage: FC = () => {
@@ -11,6 +13,8 @@ export const LoginPage: FC = () => {
   if (isAuthorize) {
     return <Navigate to={'/' + RoutePath.MainPage}/>;
   }
+
+  const city = cities[getRandomInt(0, cities.length - 1)];
 
   return (
     <div className="page page--gray page--login">
@@ -32,9 +36,15 @@ export const LoginPage: FC = () => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <NavLink
+                className="locations__item-link"
+                to={{
+                  pathname: '/' + RoutePath.MainPage,
+                  search: `?${CITY_SEARCH_PARAM}=${city}`,
+                }}
+              >
+                <span>{city}</span>
+              </NavLink>
             </div>
           </section>
         </div>
