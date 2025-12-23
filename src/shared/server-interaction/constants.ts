@@ -7,15 +7,25 @@ export const axiosClient = axios.create({
   timeout: 5000,
 });
 
+export const userUrl = {
+  login: '/login',
+  logout: '/logout',
+};
+
 export const offersUrl = {
   offers: '/offers',
   offer: (offerId: string) => '/offers/' + offerId,
   nearby: (offerId: string) => `/offers/${offerId}/nearby`,
 };
 
-export const userUrl = {
-  login: '/login',
-  logout: '/logout',
+export enum FavoriteStatus {
+  Favorite = 0,
+  NotFavorite = 1,
+}
+
+export const favoritesUrl = {
+  favorite: '/favorite',
+  setFavoriteStatus: (offerId: string, status: FavoriteStatus) => `/favorite/${offerId}/${status}`,
 };
 
 export const commentsUrl = {
