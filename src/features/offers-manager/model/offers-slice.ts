@@ -46,7 +46,7 @@ export const offersSlice = createSlice({
     setCity: (state: OffersState, action: PayloadAction<City['name']>) => {
       const city = action.payload;
       state.currentCity = city;
-      state.currentCityOffers = state.offers[city];
+      state.currentCityOffers = state.offers[city] ?? [];
       state.sortOption = OfferSortOption.popular;
     },
     setActiveOffer: (state: OffersState, action: PayloadAction<Offer['id']>) => {
@@ -56,7 +56,7 @@ export const offersSlice = createSlice({
       const sort = action.payload;
       state.sortOption = sort;
       if (sort === OfferSortOption.popular) {
-        state.currentCityOffers = state.offers[state.currentCity];
+        state.currentCityOffers = state.offers[state.currentCity] ?? [];
       } else {
         state.currentCityOffers = applySortToOffers(state.currentCityOffers, sort);
       }
@@ -66,6 +66,10 @@ export const offersSlice = createSlice({
     builder.addCase(loadOffers.pending, (state) => {
       state.isOffersLoading = true;
       state.sortOption = OfferSortOption.popular;
+      state.offers = {};
+      state.favoriteOffersCount = 0;
+      state.currentCityOffers = [];
+      state.activeOfferId = null;
     }).addCase(loadOffers.fulfilled, (state, action) => {
       const offers = groupOffersByCity(action.payload.map(mapDtoToOffer));
       state.isOffersLoading = false;
