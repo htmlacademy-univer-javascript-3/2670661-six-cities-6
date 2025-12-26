@@ -1,24 +1,23 @@
-import {FC} from 'react';
+import {FC, useEffect, useMemo} from 'react';
 import {NavLink} from 'react-router-dom';
-import {OffersByCity} from '../../entities/offer/model/types.ts';
+import {groupOffersByCity} from '../../entities/offer/model/data-mappers.ts';
+import {loadFavorites} from '../../features/offers-manager/model/favorites-page-slice.ts';
 import {HeaderLogoLink} from '../../shared/components/header-logo-link.tsx';
 import {RoutePath} from '../../shared/enums/routes.ts';
-import {useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
+import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {HeaderUserInfo} from '../../widgets/common-components/header-user-info.tsx';
 import {FavoriteOfferCardList} from './cards/favorite-offer-card-list.tsx';
 import {FavoritesEmpty} from './favorites-empty.tsx';
 
 export const FavoritesPage: FC = () => {
-  const offers = useAppSelector((state) => state.offers.offers);
+  const dispatch = useAppDispatch();
+  const offers = useAppSelector((state) => state.favoritesPage.favorites);
+  const offersByCity = useMemo(() => groupOffersByCity(offers), [offers]);
 
-  let favoritesCounter = 0;
-  const favorites: OffersByCity = Object.entries(structuredClone(offers)).reduce((
-    favByCity, [city, cityOffers]
-  ) => {
-    favByCity[city] = cityOffers.filter((offer) => offer.isFavorite);
-    favoritesCounter += favByCity[city].length;
-    return favByCity;
-  }, {} as OffersByCity);
+  useEffect(() => {
+    dispatch(loadFavorites());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="page">
@@ -35,10 +34,10 @@ export const FavoritesPage: FC = () => {
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          {favoritesCounter === 0 ? <FavoritesEmpty/> : (
+          {offers.length === 0 ? <FavoritesEmpty/> : (
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
-              <FavoriteOfferCardList offers={favorites}/>
+              <FavoriteOfferCardList offers={offersByCity}/>
             </section>
           )}
         </div>

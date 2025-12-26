@@ -19,8 +19,8 @@ export const offersUrl = {
 };
 
 export enum FavoriteStatus {
-  Favorite = 0,
-  NotFavorite = 1,
+  NotFavorite = 0,
+  Favorite = 1,
 }
 
 export const favoritesUrl = {

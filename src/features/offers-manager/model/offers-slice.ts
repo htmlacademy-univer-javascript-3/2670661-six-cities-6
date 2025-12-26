@@ -7,6 +7,7 @@ import {Offer, OfferDto, OffersByCity} from '../../../entities/offer/model/types
 import {ReducerName} from '../../../shared/enums/reducer-names.ts';
 import {createAppThunk} from '../../../shared/redux-helpers/typed-thunk.ts';
 import {offersUrl} from '../../../shared/server-interaction/constants.ts';
+import {changeFavoriteStatus} from './favorites-page-slice.ts';
 
 type OffersState = {
   cities: CitiesMap;
@@ -46,7 +47,7 @@ export const offersSlice = createSlice({
     setCity: (state: OffersState, action: PayloadAction<City['name']>) => {
       const city = action.payload;
       state.currentCity = city;
-      state.currentCityOffers = state.offers[city];
+      state.currentCityOffers = state.offers[city] ?? [];
       state.sortOption = OfferSortOption.popular;
     },
     setActiveOffer: (state: OffersState, action: PayloadAction<Offer['id']>) => {
@@ -56,7 +57,7 @@ export const offersSlice = createSlice({
       const sort = action.payload;
       state.sortOption = sort;
       if (sort === OfferSortOption.popular) {
-        state.currentCityOffers = state.offers[state.currentCity];
+        state.currentCityOffers = state.offers[state.currentCity] ?? [];
       } else {
         state.currentCityOffers = applySortToOffers(state.currentCityOffers, sort);
       }
@@ -66,6 +67,10 @@ export const offersSlice = createSlice({
     builder.addCase(loadOffers.pending, (state) => {
       state.isOffersLoading = true;
       state.sortOption = OfferSortOption.popular;
+      state.offers = {};
+      state.favoriteOffersCount = 0;
+      state.currentCityOffers = [];
+      state.activeOfferId = null;
     }).addCase(loadOffers.fulfilled, (state, action) => {
       const offers = groupOffersByCity(action.payload.map(mapDtoToOffer));
       state.isOffersLoading = false;
@@ -75,6 +80,22 @@ export const offersSlice = createSlice({
       state.currentCityOffers = offers[state.currentCity] ?? [];
     }).addCase(loadOffers.rejected, (state) => {
       state.isOffersLoading = false;
+    }).addCase(changeFavoriteStatus.fulfilled, (state, action) => {
+      const favoriteOffer = action.payload;
+      const cityOffers = state.offers[favoriteOffer.city.name];
+      if (cityOffers) {
+        const favoriteId = favoriteOffer.id;
+        const newCityOffers = cityOffers.map((offer) => offer.id === favoriteId
+          ? {...offer, isFavorite: favoriteOffer.isFavorite}
+          : offer
+        );
+        state.offers = {
+          ...state.offers,
+          [favoriteOffer.city.name]: newCityOffers,
+        };
+        state.currentCityOffers = newCityOffers;
+        state.favoriteOffersCount += favoriteOffer.isFavorite ? 1 : -1;
+      }
     });
   },
 });

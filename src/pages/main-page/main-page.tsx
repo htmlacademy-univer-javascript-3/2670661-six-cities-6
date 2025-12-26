@@ -9,14 +9,18 @@ import {HeaderLogoLink} from '../../shared/components/header-logo-link.tsx';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {HeaderUserInfo} from '../../widgets/common-components/header-user-info.tsx';
 import {FullSpaceSpinner} from '../../widgets/spinner/ui/full-space-spinner.tsx';
+import {MainPageEmpty} from './main-page-empty.tsx';
 import {PlacesContainer} from './places-container.tsx';
 
 export const MainPage: FC = () => {
   const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.offers.isOffersLoading);
+  const offers = useAppSelector((state) => state.offers.currentCityOffers);
   const cities = useAppSelector((state) => state.offers.cities);
   const currentCity = useAppSelector((state) => state.offers.currentCity);
+
+  const showEmpty = !isLoading && offers.length === 0;
 
   const setActiveCity = useCallback((city: City) => {
     dispatch(setCity(city.name));
@@ -32,6 +36,11 @@ export const MainPage: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const mainClassList = ['page__main', 'page__main--index'];
+  if (showEmpty) {
+    mainClassList.push('page__main--index-empty');
+  }
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -45,7 +54,7 @@ export const MainPage: FC = () => {
         </div>
       </header>
 
-      <main className="page__main page__main--index">
+      <main className={mainClassList.join(' ')}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -53,9 +62,11 @@ export const MainPage: FC = () => {
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            {isLoading ? <FullSpaceSpinner/> : <PlacesContainer/>}
-          </div>
+          {showEmpty ? <MainPageEmpty/> : (
+            <div className="cities__places-container container">
+              {isLoading ? <FullSpaceSpinner/> : <PlacesContainer/>}
+            </div>
+          )}
         </div>
       </main>
     </div>
