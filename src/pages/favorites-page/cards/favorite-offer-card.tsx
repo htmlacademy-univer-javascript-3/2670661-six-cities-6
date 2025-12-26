@@ -1,13 +1,31 @@
 import {FC} from 'react';
 import {Link} from 'react-router-dom';
 import {Offer} from '../../../entities/offer/model/types.ts';
+import {changeFavoriteStatus} from '../../../features/offers-manager/model/favorites-page-slice.ts';
 import {RoutePath} from '../../../shared/enums/routes.ts';
+import {useAppDispatch} from '../../../shared/redux-helpers/typed-hooks.ts';
+import {FavoriteStatus} from '../../../shared/server-interaction/constants.ts';
 
 type FavoriteOfferCardProps = {
   offer: Offer;
 };
 
 export const FavoriteOfferCard: FC<FavoriteOfferCardProps> = ({offer}) => {
+  const dispatch = useAppDispatch();
+  const offerUrl = `/${RoutePath.OfferPage}/${offer.id}`;
+
+  const bookmarkedClassList = ['place-card__bookmark-button', 'button'];
+  if (offer.isFavorite) {
+    bookmarkedClassList.push('place-card__bookmark-button--active');
+  }
+
+  const onBookmarkClick = () => {
+    dispatch(changeFavoriteStatus({
+      offerId: offer.id,
+      status: offer.isFavorite ? FavoriteStatus.NotFavorite : FavoriteStatus.Favorite,
+    }));
+  };
+
   return (
     <article key={offer.id} className="favorites__card place-card">
       {offer.isPremium && (
@@ -16,9 +34,9 @@ export const FavoriteOfferCard: FC<FavoriteOfferCardProps> = ({offer}) => {
         </div>
       )}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={offerUrl}>
           <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image"/>
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -26,7 +44,11 @@ export const FavoriteOfferCard: FC<FavoriteOfferCardProps> = ({offer}) => {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button
+            className={bookmarkedClassList.join(' ')}
+            type="button"
+            onClick={onBookmarkClick}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -40,7 +62,7 @@ export const FavoriteOfferCard: FC<FavoriteOfferCardProps> = ({offer}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/${RoutePath.OfferPage}/${offer.id}`}>{offer.title}</Link>
+          <Link to={offerUrl}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

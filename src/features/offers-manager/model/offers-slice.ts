@@ -7,6 +7,7 @@ import {Offer, OfferDto, OffersByCity} from '../../../entities/offer/model/types
 import {ReducerName} from '../../../shared/enums/reducer-names.ts';
 import {createAppThunk} from '../../../shared/redux-helpers/typed-thunk.ts';
 import {offersUrl} from '../../../shared/server-interaction/constants.ts';
+import {changeFavoriteStatus} from './favorites-page-slice.ts';
 
 type OffersState = {
   cities: CitiesMap;
@@ -79,6 +80,22 @@ export const offersSlice = createSlice({
       state.currentCityOffers = offers[state.currentCity] ?? [];
     }).addCase(loadOffers.rejected, (state) => {
       state.isOffersLoading = false;
+    }).addCase(changeFavoriteStatus.fulfilled, (state, action) => {
+      const favoriteOffer = action.payload;
+      const cityOffers = state.offers[favoriteOffer.city.name];
+      if (cityOffers) {
+        const favoriteId = favoriteOffer.id;
+        const newCityOffers = cityOffers.map((offer) => offer.id === favoriteId
+          ? {...offer, isFavorite: favoriteOffer.isFavorite}
+          : offer
+        );
+        state.offers = {
+          ...state.offers,
+          [favoriteOffer.city.name]: newCityOffers,
+        };
+        state.currentCityOffers = newCityOffers;
+        state.favoriteOffersCount += favoriteOffer.isFavorite ? 1 : -1;
+      }
     });
   },
 });
