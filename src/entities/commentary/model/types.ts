@@ -10,6 +10,8 @@ export type CommentaryDto = {
   rating: number;
 };
 
+export type Commentary = Pick<CommentaryDto, 'id' | 'user' | 'comment' | 'rating'> & {date: Date};
+
 export type AddCommentaryRequestBody = {
   comment: string;
   rating: number;

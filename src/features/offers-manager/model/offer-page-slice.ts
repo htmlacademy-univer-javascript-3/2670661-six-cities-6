@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AxiosError} from 'axios';
-import {AddCommentaryRequestBody, CommentaryDto} from '../../../entities/commentary/model/types.ts';
+import {commentaryFromDto} from '../../../entities/commentary/model/data-mappers.ts';
+import {AddCommentaryRequestBody, Commentary, CommentaryDto} from '../../../entities/commentary/model/types.ts';
 import {ErrorDto, ValidationErrorDto} from '../../../entities/error/model/types.ts';
 import {mapDtoToOffer} from '../../../entities/offer/model/data-mappers.ts';
 import {Offer, OfferDto, OfferExtendedDto} from '../../../entities/offer/model/types.ts';
@@ -8,6 +9,7 @@ import {ReducerName} from '../../../shared/enums/reducer-names.ts';
 import {createAppThunk} from '../../../shared/redux-helpers/typed-thunk.ts';
 import {commentsUrl, offersUrl} from '../../../shared/server-interaction/constants.ts';
 import {RequestStatus} from '../../../shared/server-interaction/request-status.ts';
+import {changeFavoriteStatus} from './favorites-page-slice.ts';
 
 type AddCommentActionPayload = AddCommentaryRequestBody & {offerId: string};
 
@@ -21,7 +23,7 @@ type OffersPageState = {
   nearbyLoadingError: ErrorDto | null;
 
   isCommentsLoading: boolean;
-  comments: CommentaryDto[];
+  comments: Commentary[];
   commentsLoadingError: ErrorDto | null;
 
   commentPostingState: RequestStatus;
@@ -128,7 +130,9 @@ export const offerPageSlice = createSlice({
       state.commentsLoadingError = null;
     }).addCase(loadComments.fulfilled, (state, action) => {
       state.isCommentsLoading = false;
-      state.comments = action.payload;
+      state.comments = action.payload
+        .map(commentaryFromDto)
+        .toSorted((c1, c2) => c2.date.valueOf() - c1.date.valueOf());
     }).addCase(loadComments.rejected, (state, {payload}) => {
       const error = (payload as AxiosError<ErrorDto>).response?.data;
       state.isCommentsLoading = false;
@@ -138,11 +142,22 @@ export const offerPageSlice = createSlice({
       state.commentPostingError = null;
     }).addCase(addComment.fulfilled, (state, action) => {
       state.commentPostingState = RequestStatus.success;
-      state.comments.push(action.payload);
+      state.comments.unshift(commentaryFromDto(action.payload));
     }).addCase(addComment.rejected, (state, {payload}) => {
       state.commentPostingState = RequestStatus.failure;
       const error = (payload as AxiosError<ErrorDto | ValidationErrorDto>).response?.data;
       state.commentPostingError = error as ErrorDto | ValidationErrorDto;
+    }).addCase(changeFavoriteStatus.fulfilled, (state, action) => {
+      const favoriteOffer = action.payload;
+      const favoriteId = favoriteOffer.id;
+      if (state.offerData?.id === favoriteId) {
+        state.offerData.isFavorite = favoriteOffer.isFavorite;
+      } else {
+        state.nearbyOffers = state.nearbyOffers.map((offer) => offer.id === favoriteId
+          ? {...offer, isFavorite: favoriteOffer.isFavorite}
+          : offer
+        );
+      }
     });
   },
 });

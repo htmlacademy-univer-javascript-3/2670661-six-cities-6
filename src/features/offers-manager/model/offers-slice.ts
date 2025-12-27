@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {DEFAULT_CITY} from '../../../entities/city/model/constants.ts';
 import {extractCities} from '../../../entities/city/model/data-mappers.ts';
-import {CitiesMap, City, CityName} from '../../../entities/city/model/types.ts';
+import {CitiesMap, City} from '../../../entities/city/model/types.ts';
 import {OfferSortOption} from '../../../entities/offer/model/constants.ts';
 import {applySortToOffers, groupOffersByCity, mapDtoToOffer} from '../../../entities/offer/model/data-mappers.ts';
 import {Offer, OfferDto, OffersByCity} from '../../../entities/offer/model/types.ts';
@@ -22,7 +23,7 @@ type OffersState = {
 
 const initialState: OffersState = {
   cities: {},
-  currentCity: CityName.Amsterdam,
+  currentCity: DEFAULT_CITY.name,
   offers: {},
   favoriteOffersCount: 0,
   currentCityOffers: [],

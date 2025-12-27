@@ -24,7 +24,7 @@ export const CommentsList = () => {
     <>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
       <ul className="reviews__list">
-        {comments.map((commentary) => (<CommentaryCard key={commentary.id} commentary={commentary}/>))}
+        {comments.slice(0, 10).map((commentary) => (<CommentaryCard key={commentary.id} commentary={commentary}/>))}
       </ul>
     </>
   );

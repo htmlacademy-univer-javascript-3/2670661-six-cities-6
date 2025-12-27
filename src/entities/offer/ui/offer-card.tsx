@@ -12,6 +12,7 @@ type OfferCardProps = {
 
 export const OfferCard: FC<OfferCardProps> = ({offer, onMouseEnter, onChangeFavoriteStatus}) => {
   const {id, title, type, rating, price, previewImage, isPremium, isFavorite} = offer;
+  const roundedRating = Math.max(1, Math.min(5, Math.round(rating)));
 
   const bookmarkedClassList = ['place-card__bookmark-button', 'button'];
   if (isFavorite) {
@@ -49,7 +50,7 @@ export const OfferCard: FC<OfferCardProps> = ({offer, onMouseEnter, onChangeFavo
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${20 * rating}%`}}></span>
+            <span style={{width: `${20 * roundedRating}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -1,13 +1,12 @@
 import {FC} from 'react';
-import {CommentaryDto} from '../model/types.ts';
+import {Commentary} from '../model/types.ts';
 
 type CommentaryCardProps = {
-  commentary: CommentaryDto;
+  commentary: Commentary;
 };
 
 export const CommentaryCard: FC<CommentaryCardProps> = ({commentary}) => {
-  const {rating, comment, user} = commentary;
-  const date = new Date(commentary.date);
+  const {rating, comment, user, date} = commentary;
 
   return (
     <li className="reviews__item">

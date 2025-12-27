@@ -19,7 +19,10 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({offerId}) => {
   const [rating, setRating] = useState(0);
   const [comment, setCommentText] = useState('');
 
-  const isSubmitDisabled = rating === 0 || comment === '' || postingState !== RequestStatus.idle;
+  const isSubmitDisabled = rating === 0
+    || comment.length < 50
+    || comment.length > 300
+    || postingState !== RequestStatus.idle;
 
   const handleStarClick: FormEventHandler<HTMLInputElement> = (e) => {
     setRating(parseInt((e.target as HTMLInputElement).value, 10));
@@ -42,6 +45,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({offerId}) => {
   useEffect(() => {
     if (postingState === RequestStatus.success) {
       setCommentText('');
+      setRating(0);
     }
     if (postingState === RequestStatus.success || postingState === RequestStatus.failure) {
       dispatch(handleCommentPostingResult());
@@ -50,18 +54,23 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({offerId}) => {
   }, [postingState, setRating, setCommentText]);
 
   return (
-    <form className="reviews__form form" onSubmit={handleFormSubmit}>
+    <form
+      className="reviews__form form"
+      onSubmit={handleFormSubmit}
+      inert={postingState === RequestStatus.pending ? '' : undefined}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {[5, 4, 3, 2, 1].map((starCount) => (
           <Fragment key={starCount}>
             <input
-              id={`${starCount}-stars`}
-              name="rating"
-              value={starCount}
-              className="form__rating-input visually-hidden"
               type="radio"
-              onInput={handleStarClick}
+              name="rating"
+              id={`${starCount}-stars`}
+              value={starCount}
+              checked={starCount === rating}
+              className="form__rating-input visually-hidden"
+              onChange={handleStarClick}
             />
             <label
               htmlFor={`${starCount}-stars`}
@@ -88,7 +97,13 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({offerId}) => {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={isSubmitDisabled}>Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={isSubmitDisabled}
+        >
+          Submit
+        </button>
       </div>
       {postingError && (
         <p style={{color: 'red'}}>
