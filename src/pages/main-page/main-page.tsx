@@ -4,7 +4,7 @@ import {CITY_SEARCH_PARAM} from '../../entities/city/model/constants.ts';
 import {City} from '../../entities/city/model/types.ts';
 import {isValidCity} from '../../entities/city/model/utils.ts';
 import {CityLinkList} from '../../entities/city/ui/city-link-list.tsx';
-import {loadOffers, setCity} from '../../features/offers-manager/model/offers-slice.ts';
+import {loadOffers, setCity} from '../../slices/offers-slice.ts';
 import {HeaderLogoLink} from '../../shared/components/header-logo-link.tsx';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {HeaderUserInfo} from '../../widgets/common-components/header-user-info.tsx';

@@ -1,14 +1,14 @@
 import {configureStore} from '@reduxjs/toolkit';
-import {AxiosError} from 'axios';
+import {AxiosError, InternalAxiosRequestConfig} from 'axios';
 import {Reducer} from 'redux';
-import {currentUserReducer} from '../features/current-user/model/current-user-slice.ts';
-import {favoritesPageReducer} from '../features/offers-manager/model/favorites-page-slice.ts';
-import {offerPageReducer} from '../features/offers-manager/model/offer-page-slice.ts';
-import {offersReducer} from '../features/offers-manager/model/offers-slice.ts';
 import {ReducerName} from '../shared/enums/reducer-names.ts';
 import {ThunkExtraArguments} from '../shared/redux-helpers/typed-thunk.ts';
 import {axiosClient} from '../shared/server-interaction/constants.ts';
 import {showErrorNotification} from '../shared/utils/notifications.ts';
+import {currentUserReducer} from '../slices/current-user-slice.ts';
+import {favoritesPageReducer} from '../slices/favorites-page-slice.ts';
+import {offerPageReducer} from '../slices/offer-page-slice.ts';
+import {offersReducer} from '../slices/offers-slice.ts';
 
 export const store = configureStore({
   reducer: {
@@ -24,12 +24,12 @@ export const store = configureStore({
 });
 
 // interceptor to add user token to requests
-axiosClient.interceptors.request.use((config) => {
+axiosClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const state = store.getState();
   const token = state.currentUser.userData?.token;
 
   if (token) {
-    config.headers['X-Token'] = token;
+    config.headers.set('X-Token', token);
   }
 
   return config;

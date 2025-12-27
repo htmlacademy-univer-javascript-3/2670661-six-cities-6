@@ -1,7 +1,7 @@
 import {FC, useEffect, useMemo} from 'react';
 import {NavLink} from 'react-router-dom';
 import {groupOffersByCity} from '../../entities/offer/model/data-mappers.ts';
-import {loadFavorites} from '../../features/offers-manager/model/favorites-page-slice.ts';
+import {loadFavorites} from '../../slices/favorites-page-slice.ts';
 import {HeaderLogoLink} from '../../shared/components/header-logo-link.tsx';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';

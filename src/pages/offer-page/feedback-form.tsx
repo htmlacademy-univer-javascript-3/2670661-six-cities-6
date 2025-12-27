@@ -1,7 +1,7 @@
 import {FC, FormEventHandler, Fragment, useEffect, useState} from 'react';
 import {isValidationError} from '../../entities/error/model/utils.ts';
 import {Offer} from '../../entities/offer/model/types.ts';
-import {addComment, handleCommentPostingResult, resetCommentPostingState} from '../../features/offers-manager/model/offer-page-slice.ts';
+import {addComment, handleCommentPostingResult, resetCommentPostingState} from '../../slices/offer-page-slice.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {RequestStatus} from '../../shared/server-interaction/request-status.ts';
 

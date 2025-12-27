@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {NavLink} from 'react-router-dom';
-import {userLogout} from '../../features/current-user/model/current-user-slice.ts';
+import {userLogout} from '../../slices/current-user-slice.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 
