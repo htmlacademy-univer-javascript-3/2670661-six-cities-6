@@ -1,6 +1,6 @@
 import React, {FC, MouseEventHandler, ReactNode, useRef, useState} from 'react';
-import {useOutsideClick} from '../../../hooks/use-outside-click.ts';
-import {SelectorOption} from '../model/types.ts';
+import {useOutsideClick} from '../../hooks/use-outside-click.ts';
+import {SelectorOption} from './model/types.ts';
 
 type SelectorWidgetProps = {
   options: SelectorOption[];

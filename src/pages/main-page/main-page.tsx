@@ -8,7 +8,7 @@ import {loadOffers, setCity} from '../../slices/offers-slice.ts';
 import {HeaderLogoLink} from '../../components/shared/header-logo-link.tsx';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {HeaderUserInfo} from '../../components/shared/header-user-info.tsx';
-import {FullSpaceSpinner} from '../../widgets/spinner/ui/full-space-spinner.tsx';
+import {FullSpaceSpinner} from '../../components/spinner/full-space-spinner.tsx';
 import {MainPageEmpty} from './main-page-empty.tsx';
 import {PlacesContainer} from './places-container.tsx';
 

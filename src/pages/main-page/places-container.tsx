@@ -9,8 +9,8 @@ import {setActiveOffer, setOffersSort} from '../../slices/offers-slice.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {FavoriteStatus} from '../../shared/server-interaction/constants.ts';
-import {SelectorOption} from '../../widgets/selector/model/types.ts';
-import {SelectorWidget} from '../../widgets/selector/ui/selector-widget.tsx';
+import {SelectorOption} from '../../components/selector-widget/model/types.ts';
+import {SelectorWidget} from '../../components/selector-widget/selector-widget.tsx';
 import {MapWrapper} from './map-wrapper.tsx';
 
 const sortOptions: SelectorOption[] = [
