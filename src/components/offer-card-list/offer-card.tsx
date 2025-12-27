@@ -1,8 +1,8 @@
 import {FC, MouseEventHandler} from 'react';
 import {Link} from 'react-router-dom';
+import {Offer} from '../../shared/entities/offer/types.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {FavoriteStatus} from '../../shared/server-interaction/constants.ts';
-import {Offer} from '../../shared/entities/offer/types.ts';
 
 type OfferCardProps = {
   offer: Offer;

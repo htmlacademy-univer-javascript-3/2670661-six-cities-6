@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
-import {FavoriteStatus} from '../../shared/server-interaction/constants.ts';
 import {Offer} from '../../shared/entities/offer/types.ts';
+import {FavoriteStatus} from '../../shared/server-interaction/constants.ts';
 import {OfferCard} from './offer-card.tsx';
 
 type OfferCardsProps = {

@@ -1,14 +1,14 @@
 import {FC, useCallback, useEffect} from 'react';
 import {useSearchParams} from 'react-router-dom';
+import {CityLinkList} from '../../components/city-link-list/city-link-list.tsx';
+import {HeaderLogoLink} from '../../components/shared/header-logo-link.tsx';
+import {HeaderUserInfo} from '../../components/shared/header-user-info.tsx';
+import {FullSpaceSpinner} from '../../components/spinner/full-space-spinner.tsx';
 import {CITY_SEARCH_PARAM} from '../../shared/entities/city/constants.ts';
 import {City} from '../../shared/entities/city/types.ts';
 import {isValidCity} from '../../shared/entities/city/utils.ts';
-import {CityLinkList} from '../../components/city-link-list/city-link-list.tsx';
-import {loadOffers, setCity} from '../../slices/offers-slice.ts';
-import {HeaderLogoLink} from '../../components/shared/header-logo-link.tsx';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {HeaderUserInfo} from '../../components/shared/header-user-info.tsx';
-import {FullSpaceSpinner} from '../../components/spinner/full-space-spinner.tsx';
+import {loadOffers, setCity} from '../../slices/offers-slice.ts';
 import {MainPageEmpty} from './main-page-empty.tsx';
 import {PlacesContainer} from './places-container.tsx';
 

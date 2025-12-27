@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {useMap} from 'react-leaflet';
-import {Coordinates} from '../../shared/types/coordinates.ts';
+import {Coordinates} from '../../shared/entities/coordinates/coordinates.ts';
 
 type UpdateMapCentreProps = {
   mapCenter: Coordinates;

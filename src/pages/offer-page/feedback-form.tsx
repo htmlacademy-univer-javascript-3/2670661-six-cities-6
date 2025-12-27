@@ -1,9 +1,9 @@
 import {FC, FormEventHandler, Fragment, useEffect, useState} from 'react';
 import {isValidationError} from '../../shared/entities/error/utils.ts';
 import {Offer} from '../../shared/entities/offer/types.ts';
-import {addComment, handleCommentPostingResult, resetCommentPostingState} from '../../slices/offer-page-slice.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {RequestStatus} from '../../shared/server-interaction/request-status.ts';
+import {addComment, handleCommentPostingResult, resetCommentPostingState} from '../../slices/offer-page-slice.ts';
 
 type FeedbackFormProps = {
   offerId: Offer['id'];

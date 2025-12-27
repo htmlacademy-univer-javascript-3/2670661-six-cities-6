@@ -1,4 +1,4 @@
-import {Coordinates} from '../../types/coordinates.ts';
+import {Coordinates} from '../coordinates/coordinates.ts';
 
 export enum CityName {
   Paris = 'Paris',

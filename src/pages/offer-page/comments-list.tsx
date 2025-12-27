@@ -1,9 +1,9 @@
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {CommentaryCard} from '../../components/commentary-card/commentary-card.tsx';
-import {loadComments} from '../../slices/offer-page-slice.ts';
-import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {Spinner} from '../../components/spinner/spinner.tsx';
+import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
+import {loadComments} from '../../slices/offer-page-slice.ts';
 
 export const CommentsList = () => {
   const dispatch = useAppDispatch();

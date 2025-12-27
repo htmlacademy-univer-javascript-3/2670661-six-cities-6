@@ -1,7 +1,7 @@
 import 'leaflet/dist/leaflet.css';
 import {FC} from 'react';
 import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
-import {Coordinates} from '../../shared/types/coordinates.ts';
+import {Coordinates} from '../../shared/entities/coordinates/coordinates.ts';
 import {activeMarker, defaultMarker} from './model/markers.ts';
 import {PointOnMap} from './model/types.ts';
 import {UpdateMapCenter} from './update-map-center.tsx';
