@@ -1,6 +1,6 @@
 import {FC, useCallback, useEffect} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
-import {Offer, OfferExtendedDto} from '../../entities/offer/model/types.ts';
+import {Offer, OfferExtendedDto} from '../../shared/entities/offer/types.ts';
 import {OfferCardList} from '../../components/offer-card-list/offer-card-list.tsx';
 import {changeFavoriteStatus} from '../../slices/favorites-page-slice.ts';
 import {loadNearbyOffers, loadOffer} from '../../slices/offer-page-slice.ts';

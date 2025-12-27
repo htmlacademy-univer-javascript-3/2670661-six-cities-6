@@ -1,6 +1,6 @@
 import {FC, useEffect, useMemo} from 'react';
 import {NavLink} from 'react-router-dom';
-import {groupOffersByCity} from '../../entities/offer/model/data-mappers.ts';
+import {groupOffersByCity} from '../../shared/entities/offer/data-mappers.ts';
 import {loadFavorites} from '../../slices/favorites-page-slice.ts';
 import {HeaderLogoLink} from '../../components/shared/header-logo-link.tsx';
 import {RoutePath} from '../../shared/enums/routes.ts';

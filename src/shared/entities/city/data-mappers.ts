@@ -1,4 +1,4 @@
-import {OfferDto} from '../../offer/model/types.ts';
+import {OfferDto} from '../offer/types.ts';
 import {CitiesMap} from './types.ts';
 
 export const extractCities = (offers: OfferDto[]): CitiesMap => {

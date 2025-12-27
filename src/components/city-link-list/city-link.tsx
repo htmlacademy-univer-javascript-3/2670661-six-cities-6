@@ -1,8 +1,8 @@
 import {FC} from 'react';
 import {NavLink} from 'react-router-dom';
 import {RoutePath} from '../../shared/enums/routes.ts';
-import {CITY_SEARCH_PARAM} from '../../entities/city/model/constants.ts';
-import {City} from '../../entities/city/model/types.ts';
+import {CITY_SEARCH_PARAM} from '../../shared/entities/city/constants.ts';
+import {City} from '../../shared/entities/city/types.ts';
 
 type CityLinkProps = {
   city: City;

@@ -1,8 +1,8 @@
 import React, {FC, useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {DEFAULT_CITY} from '../../entities/city/model/constants.ts';
-import {OfferSortOption} from '../../entities/offer/model/constants.ts';
-import {Offer} from '../../entities/offer/model/types.ts';
+import {DEFAULT_CITY} from '../../shared/entities/city/constants.ts';
+import {OfferSortOption} from '../../shared/entities/offer/constants.ts';
+import {Offer} from '../../shared/entities/offer/types.ts';
 import {OfferCardList} from '../../components/offer-card-list/offer-card-list.tsx';
 import {changeFavoriteStatus} from '../../slices/favorites-page-slice.ts';
 import {setActiveOffer, setOffersSort} from '../../slices/offers-slice.ts';

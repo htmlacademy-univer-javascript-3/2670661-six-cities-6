@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import {OffersByCity} from '../../../entities/offer/model/types.ts';
+import {OffersByCity} from '../../../shared/entities/offer/types.ts';
 import {FavoriteOfferCard} from './favorite-offer-card.tsx';
 
 type FavoriteOfferCardListProps = {

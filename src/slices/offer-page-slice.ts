@@ -1,10 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AxiosError} from 'axios';
-import {commentaryFromDto} from '../entities/commentary/model/data-mappers.ts';
-import {AddCommentaryRequestBody, Commentary, CommentaryDto} from '../entities/commentary/model/types.ts';
-import {ErrorDto, ValidationErrorDto} from '../entities/error/model/types.ts';
-import {mapDtoToOffer} from '../entities/offer/model/data-mappers.ts';
-import {Offer, OfferDto, OfferExtendedDto} from '../entities/offer/model/types.ts';
+import {commentaryFromDto} from '../shared/entities/commentary/data-mappers.ts';
+import {AddCommentaryRequestBody, Commentary, CommentaryDto} from '../shared/entities/commentary/types.ts';
+import {ErrorDto, ValidationErrorDto} from '../shared/entities/error/types.ts';
+import {mapDtoToOffer} from '../shared/entities/offer/data-mappers.ts';
+import {Offer, OfferDto, OfferExtendedDto} from '../shared/entities/offer/types.ts';
 import {ReducerName} from '../shared/enums/reducer-names.ts';
 import {createAppThunk} from '../shared/redux-helpers/typed-thunk.ts';
 import {commentsUrl, offersUrl} from '../shared/server-interaction/constants.ts';

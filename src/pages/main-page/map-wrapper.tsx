@@ -1,5 +1,5 @@
 import React, {FC, useMemo} from 'react';
-import {DEFAULT_CITY} from '../../entities/city/model/constants.ts';
+import {DEFAULT_CITY} from '../../shared/entities/city/constants.ts';
 import {useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {PointOnMap} from '../../components/map-widget/model/types.ts';
 import {MapWidget} from '../../components/map-widget/map-widget.tsx';

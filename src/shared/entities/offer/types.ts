@@ -1,4 +1,4 @@
-import {Coordinates} from '../../../shared/types/coordinates.ts';
+import {Coordinates} from '../../types/coordinates.ts';
 
 type OfferCommonDto = {
   id: string;

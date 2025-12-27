@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {Link} from 'react-router-dom';
-import {Offer} from '../../../entities/offer/model/types.ts';
+import {Offer} from '../../../shared/entities/offer/types.ts';
 import {changeFavoriteStatus} from '../../../slices/favorites-page-slice.ts';
 import {RoutePath} from '../../../shared/enums/routes.ts';
 import {useAppDispatch} from '../../../shared/redux-helpers/typed-hooks.ts';

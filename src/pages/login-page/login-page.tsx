@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {Navigate, NavLink} from 'react-router-dom';
-import {cities, CITY_SEARCH_PARAM} from '../../entities/city/model/constants.ts';
+import {cities, CITY_SEARCH_PARAM} from '../../shared/entities/city/constants.ts';
 import {HeaderLogoLink} from '../../components/shared/header-logo-link.tsx';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';

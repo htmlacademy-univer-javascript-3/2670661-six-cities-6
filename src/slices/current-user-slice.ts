@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AxiosError} from 'axios';
-import {AuthErrorResultDto, AuthSuccessResultDto, LoginRequestBody, UserData} from '../entities/user/model/types.ts';
+import {AuthErrorResultDto, AuthSuccessResultDto, LoginRequestBody, UserData} from '../shared/entities/user/types.ts';
 import {ReducerName} from '../shared/enums/reducer-names.ts';
 import {createAppThunk} from '../shared/redux-helpers/typed-thunk.ts';
 import {userUrl} from '../shared/server-interaction/constants.ts';
