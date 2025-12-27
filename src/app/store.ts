@@ -1,4 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit';
+import {AxiosError} from 'axios';
 import {Reducer} from 'redux';
 import {currentUserReducer} from '../features/current-user/model/current-user-slice.ts';
 import {favoritesPageReducer} from '../features/offers-manager/model/favorites-page-slice.ts';
@@ -7,6 +8,7 @@ import {offersReducer} from '../features/offers-manager/model/offers-slice.ts';
 import {ReducerName} from '../shared/enums/reducer-names.ts';
 import {ThunkExtraArguments} from '../shared/redux-helpers/typed-thunk.ts';
 import {axiosClient} from '../shared/server-interaction/constants.ts';
+import {showErrorNotification} from '../shared/utils/notifications.ts';
 
 export const store = configureStore({
   reducer: {
@@ -31,4 +33,17 @@ axiosClient.interceptors.request.use((config) => {
   }
 
   return config;
+});
+
+// interceptor to catch some errors on response
+axiosClient.interceptors.response.use((r) => r, (error: AxiosError) => {
+  if (error.code === 'ERR_NETWORK') {
+    showErrorNotification('Connection error');
+  }
+
+  if (error.code === 'ECONNABORTED') {
+    showErrorNotification('Connection timeout');
+  }
+
+  return Promise.reject(error);
 });
