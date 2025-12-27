@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import {Navigate, NavLink} from 'react-router-dom';
 import {cities, CITY_SEARCH_PARAM} from '../../entities/city/model/constants.ts';
-import {HeaderLogoLink} from '../../shared/components/header-logo-link.tsx';
+import {HeaderLogoLink} from '../../components/shared/header-logo-link.tsx';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {getRandomInt} from '../../shared/utils/math-utils.ts';

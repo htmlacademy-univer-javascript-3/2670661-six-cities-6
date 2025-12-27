@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {PrivateRoute} from '../features/private-route/private-route.tsx';
+import {PrivateRoute} from '../components/private-route/private-route.tsx';
 import {FavoritesPage} from '../pages/favorites-page/favorites-page.tsx';
 import {LoginPage} from '../pages/login-page/login-page.tsx';
 import {MainPage} from '../pages/main-page/main-page.tsx';

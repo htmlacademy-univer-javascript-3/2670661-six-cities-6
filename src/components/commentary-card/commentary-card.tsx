@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import {Commentary} from '../model/types.ts';
+import {Commentary} from '../../entities/commentary/model/types.ts';
 
 type CommentaryCardProps = {
   commentary: Commentary;

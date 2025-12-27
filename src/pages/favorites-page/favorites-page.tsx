@@ -2,10 +2,10 @@ import {FC, useEffect, useMemo} from 'react';
 import {NavLink} from 'react-router-dom';
 import {groupOffersByCity} from '../../entities/offer/model/data-mappers.ts';
 import {loadFavorites} from '../../slices/favorites-page-slice.ts';
-import {HeaderLogoLink} from '../../shared/components/header-logo-link.tsx';
+import {HeaderLogoLink} from '../../components/shared/header-logo-link.tsx';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {HeaderUserInfo} from '../../widgets/common-components/header-user-info.tsx';
+import {HeaderUserInfo} from '../../components/shared/header-user-info.tsx';
 import {FavoriteOfferCardList} from './cards/favorite-offer-card-list.tsx';
 import {FavoritesEmpty} from './favorites-empty.tsx';
 

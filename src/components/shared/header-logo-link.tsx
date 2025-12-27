@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {NavLink} from 'react-router-dom';
-import {RoutePath} from '../enums/routes.ts';
+import {RoutePath} from '../../shared/enums/routes.ts';
 
 export const HeaderLogoLink: FC = React.memo(() => {
   return (

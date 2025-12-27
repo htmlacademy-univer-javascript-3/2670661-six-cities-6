@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {CitiesMap, City} from '../model/types.ts';
+import {CitiesMap, City} from '../../entities/city/model/types.ts';
 import {CityLink} from './city-link.tsx';
 
 type CityLinkListProps = {

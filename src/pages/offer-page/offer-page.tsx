@@ -1,7 +1,7 @@
 import {FC, useCallback, useEffect} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {Offer, OfferExtendedDto} from '../../entities/offer/model/types.ts';
-import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
+import {OfferCardList} from '../../components/offer-card-list/offer-card-list.tsx';
 import {changeFavoriteStatus} from '../../slices/favorites-page-slice.ts';
 import {loadNearbyOffers, loadOffer} from '../../slices/offer-page-slice.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';

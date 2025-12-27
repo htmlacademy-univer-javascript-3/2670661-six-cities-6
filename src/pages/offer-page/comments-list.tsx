@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {CommentaryCard} from '../../entities/commentary/ui/commentary-card.tsx';
+import {CommentaryCard} from '../../components/commentary-card/commentary-card.tsx';
 import {loadComments} from '../../slices/offer-page-slice.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {Spinner} from '../../widgets/spinner/ui/spinner.tsx';
