@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom';
 import {CITY_SEARCH_PARAM} from '../../shared/entities/city/constants.ts';
 import {City} from '../../shared/entities/city/types.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
+import {CityLickTestIds} from './constants.ts';
 
 type CityLinkProps = {
   city: City;
@@ -19,6 +20,7 @@ export const CityLink: FC<CityLinkProps> = ({city, onCityClick, isActive = false
   return (
     <li className="locations__item">
       <NavLink
+        data-testid={CityLickTestIds.CityNavlink}
         className={linkClassName.join(' ')}
         to={{
           pathname: '/' + RoutePath.MainPage,

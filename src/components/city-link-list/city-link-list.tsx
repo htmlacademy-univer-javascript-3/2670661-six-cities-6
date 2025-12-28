@@ -5,7 +5,7 @@ import {CityLink} from './city-link.tsx';
 type CityLinkListProps = {
   cities: CitiesMap;
   activeCityName: City['name'];
-  onCityClick: (city: City) => void;
+  onCityClick?: (city: City) => void;
 };
 
 export const CityLinkList: FC<CityLinkListProps> = React.memo(({cities, activeCityName, onCityClick}) => {
@@ -17,6 +17,7 @@ export const CityLinkList: FC<CityLinkListProps> = React.memo(({cities, activeCi
           city={city}
           onCityClick={onCityClick}
           isActive={activeCityName === city.name}
+          data-testid={'sss'}
         />
       ))}
     </ul>
