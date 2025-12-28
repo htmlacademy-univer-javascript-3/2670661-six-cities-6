@@ -10,18 +10,30 @@ import {favoritesPageReducer} from '../slices/favorites-page-slice/favorites-pag
 import {offerPageReducer} from '../slices/offer-page-slice/offer-page-slice.ts';
 import {offersReducer} from '../slices/offers-slice/offers-slice.ts';
 
-export const store = configureStore({
-  reducer: {
-    [ReducerName.currentUser]: currentUserReducer,
-    [ReducerName.offers]: offersReducer,
-    [ReducerName.offerPage]: offerPageReducer,
-    [ReducerName.favoritesPage]: favoritesPageReducer,
-  } satisfies Record<ReducerName, Reducer>,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    serializableCheck: false,
-    thunk: {extraArgument: {axios: axiosClient} satisfies ThunkExtraArguments},
-  }),
-});
+type StateSchema = {
+  [ReducerName.currentUser]: ReturnType<typeof currentUserReducer>;
+  [ReducerName.offers]: ReturnType<typeof offersReducer>;
+  [ReducerName.offerPage]: ReturnType<typeof offerPageReducer>;
+  [ReducerName.favoritesPage]: ReturnType<typeof favoritesPageReducer>;
+};
+
+export const createStore = ({initialState}: {initialState?: Partial<StateSchema>} = {}) => {
+  return configureStore({
+    reducer: {
+      [ReducerName.currentUser]: currentUserReducer,
+      [ReducerName.offers]: offersReducer,
+      [ReducerName.offerPage]: offerPageReducer,
+      [ReducerName.favoritesPage]: favoritesPageReducer,
+    } satisfies Record<ReducerName, Reducer>,
+    preloadedState: initialState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+      serializableCheck: false,
+      thunk: {extraArgument: {axios: axiosClient} satisfies ThunkExtraArguments},
+    }),
+  });
+};
+
+export const store = createStore();
 
 // interceptor to add user token to requests
 axiosClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
