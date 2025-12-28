@@ -11,35 +11,35 @@ import {RootState} from '../shared/redux-helpers/typed-hooks.ts';
 import {App} from './app.tsx';
 import {createStore} from './store.ts';
 
-vi.mock('../pages/main-page/main-page.tsx', () => ({MainPage: () => <div data-testid="MainPage"/>}));
-vi.mock('../pages/login-page/login-page.tsx', () => ({LoginPage: () => <div data-testid="LoginPage"/>}));
-vi.mock('../pages/favorites-page/favorites-page.tsx', () => ({FavoritesPage: () => <div data-testid="FavoritesPage"/>}));
-vi.mock('../pages/offer-page/offer-page.tsx', () => ({OfferPage: () => <div data-testid="OfferPage"/>}));
-vi.mock('../pages/not-found-404-page/not-found-404-page.tsx', () => ({NotFound404Page: () => <div data-testid="NotFoundPage"/>}));
-
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
-  return {
-    ...actual,
-    BrowserRouter: ({children}: {children: React.ReactNode}) => <div>{children}</div>,
-  };
-});
-
-const renderWithRouter = (
-  component: React.ReactNode,
-  initialPath: string = '/',
-  initialState: DeepPartial<RootState> = {},
-) => {
-  return render(
-    <Provider store={createStore({initialState: initialState as Partial<RootState>})}>
-      <MemoryRouter initialEntries={[initialPath]}>
-        {component}
-      </MemoryRouter>
-    </Provider>
-  );
-};
-
 describe('App Routing', () => {
+  vi.mock('../pages/main-page/main-page.tsx', () => ({MainPage: () => <div data-testid="MainPage"/>}));
+  vi.mock('../pages/login-page/login-page.tsx', () => ({LoginPage: () => <div data-testid="LoginPage"/>}));
+  vi.mock('../pages/favorites-page/favorites-page.tsx', () => ({FavoritesPage: () => <div data-testid="FavoritesPage"/>}));
+  vi.mock('../pages/offer-page/offer-page.tsx', () => ({OfferPage: () => <div data-testid="OfferPage"/>}));
+  vi.mock('../pages/not-found-404-page/not-found-404-page.tsx', () => ({NotFound404Page: () => <div data-testid="NotFoundPage"/>}));
+
+  vi.mock('react-router-dom', async () => {
+    const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
+    return {
+      ...actual,
+      BrowserRouter: ({children}: {children: React.ReactNode}) => <div>{children}</div>,
+    };
+  });
+
+  const renderWithRouter = (
+    component: React.ReactNode,
+    initialPath: string = '/',
+    initialState: DeepPartial<RootState> = {},
+  ) => {
+    return render(
+      <Provider store={createStore({initialState: initialState as Partial<RootState>})}>
+        <MemoryRouter initialEntries={[initialPath]}>
+          {component}
+        </MemoryRouter>
+      </Provider>
+    );
+  };
+
   it('should render MainPage on root path', () => {
     renderWithRouter(<App/>, '/');
     expect(screen.getByTestId('MainPage')).toBeInTheDocument();
