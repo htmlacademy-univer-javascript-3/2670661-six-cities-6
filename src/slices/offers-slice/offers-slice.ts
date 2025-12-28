@@ -1,14 +1,14 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {DEFAULT_CITY} from '../shared/entities/city/constants.ts';
-import {extractCities} from '../shared/entities/city/data-mappers.ts';
-import {CitiesMap, City} from '../shared/entities/city/types.ts';
-import {OfferSortOption} from '../shared/entities/offer/constants.ts';
-import {applySortToOffers, groupOffersByCity, mapDtoToOffer} from '../shared/entities/offer/data-mappers.ts';
-import {Offer, OfferDto, OffersByCity} from '../shared/entities/offer/types.ts';
-import {ReducerName} from '../shared/enums/reducer-names.ts';
-import {createAppThunk} from '../shared/redux-helpers/typed-thunk.ts';
-import {offersUrl} from '../shared/server-interaction/constants.ts';
-import {changeFavoriteStatus} from './favorites-page-slice.ts';
+import {DEFAULT_CITY} from '../../shared/entities/city/constants.ts';
+import {extractCities} from '../../shared/entities/city/data-mappers.ts';
+import {CitiesMap, City} from '../../shared/entities/city/types.ts';
+import {OfferSortOption} from '../../shared/entities/offer/constants.ts';
+import {applySortToOffers, groupOffersByCity, mapDtoToOffer} from '../../shared/entities/offer/data-mappers.ts';
+import {Offer, OfferDto, OffersByCity} from '../../shared/entities/offer/types.ts';
+import {ReducerName} from '../../shared/enums/reducer-names.ts';
+import {createAppThunk} from '../../shared/redux-helpers/typed-thunk.ts';
+import {offersUrl} from '../../shared/server-interaction/constants.ts';
+import {changeFavoriteStatus} from '../favorites-page-slice/favorites-page-slice.ts';
 
 type OffersState = {
   cities: CitiesMap;

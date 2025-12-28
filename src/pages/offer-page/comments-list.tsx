@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 import {CommentaryCard} from '../../components/commentary-card/commentary-card.tsx';
 import {Spinner} from '../../components/spinner/spinner.tsx';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {loadComments} from '../../slices/offer-page-slice.ts';
+import {loadComments} from '../../slices/offer-page-slice/offer-page-slice.ts';
 
 export const CommentsList = () => {
   const dispatch = useAppDispatch();

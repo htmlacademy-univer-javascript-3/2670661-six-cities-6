@@ -1,15 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AxiosError} from 'axios';
-import {commentaryFromDto} from '../shared/entities/commentary/data-mappers.ts';
-import {AddCommentaryRequestBody, Commentary, CommentaryDto} from '../shared/entities/commentary/types.ts';
-import {ErrorDto, ValidationErrorDto} from '../shared/entities/error/types.ts';
-import {mapDtoToOffer} from '../shared/entities/offer/data-mappers.ts';
-import {Offer, OfferDto, OfferExtendedDto} from '../shared/entities/offer/types.ts';
-import {ReducerName} from '../shared/enums/reducer-names.ts';
-import {createAppThunk} from '../shared/redux-helpers/typed-thunk.ts';
-import {commentsUrl, offersUrl} from '../shared/server-interaction/constants.ts';
-import {RequestStatus} from '../shared/server-interaction/request-status.ts';
-import {changeFavoriteStatus} from './favorites-page-slice.ts';
+import {commentaryFromDto} from '../../shared/entities/commentary/data-mappers.ts';
+import {AddCommentaryRequestBody, Commentary, CommentaryDto} from '../../shared/entities/commentary/types.ts';
+import {ErrorDto, ValidationErrorDto} from '../../shared/entities/error/types.ts';
+import {mapDtoToOffer} from '../../shared/entities/offer/data-mappers.ts';
+import {Offer, OfferDto, OfferExtendedDto} from '../../shared/entities/offer/types.ts';
+import {ReducerName} from '../../shared/enums/reducer-names.ts';
+import {createAppThunk} from '../../shared/redux-helpers/typed-thunk.ts';
+import {commentsUrl, offersUrl} from '../../shared/server-interaction/constants.ts';
+import {RequestStatus} from '../../shared/server-interaction/request-status.ts';
+import {changeFavoriteStatus} from '../favorites-page-slice/favorites-page-slice.ts';
 
 type AddCommentActionPayload = AddCommentaryRequestBody & {offerId: string};
 

@@ -1,11 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AxiosError} from 'axios';
-import {ErrorDto} from '../shared/entities/error/types.ts';
-import {mapDtoToOffer} from '../shared/entities/offer/data-mappers.ts';
-import {Offer, OfferDto, OfferExtendedDto} from '../shared/entities/offer/types.ts';
-import {ReducerName} from '../shared/enums/reducer-names.ts';
-import {createAppThunk} from '../shared/redux-helpers/typed-thunk.ts';
-import {FavoriteStatus, favoritesUrl} from '../shared/server-interaction/constants.ts';
+import {ErrorDto} from '../../shared/entities/error/types.ts';
+import {mapDtoToOffer} from '../../shared/entities/offer/data-mappers.ts';
+import {Offer, OfferDto, OfferExtendedDto} from '../../shared/entities/offer/types.ts';
+import {ReducerName} from '../../shared/enums/reducer-names.ts';
+import {createAppThunk} from '../../shared/redux-helpers/typed-thunk.ts';
+import {FavoriteStatus, favoritesUrl} from '../../shared/server-interaction/constants.ts';
 
 type FavoritePageState = {
   isFavoritesLoading: boolean;

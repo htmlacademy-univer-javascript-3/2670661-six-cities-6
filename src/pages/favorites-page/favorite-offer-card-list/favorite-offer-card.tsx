@@ -4,7 +4,7 @@ import {Offer} from '../../../shared/entities/offer/types.ts';
 import {RoutePath} from '../../../shared/enums/routes.ts';
 import {useAppDispatch} from '../../../shared/redux-helpers/typed-hooks.ts';
 import {FavoriteStatus} from '../../../shared/server-interaction/constants.ts';
-import {changeFavoriteStatus} from '../../../slices/favorites-page-slice.ts';
+import {changeFavoriteStatus} from '../../../slices/favorites-page-slice/favorites-page-slice.ts';
 
 type FavoriteOfferCardProps = {
   offer: Offer;

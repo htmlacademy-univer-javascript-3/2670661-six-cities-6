@@ -8,7 +8,7 @@ import {CITY_SEARCH_PARAM} from '../../shared/entities/city/constants.ts';
 import {City} from '../../shared/entities/city/types.ts';
 import {isValidCity} from '../../shared/entities/city/utils.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {loadOffers, setCity} from '../../slices/offers-slice.ts';
+import {loadOffers, setCity} from '../../slices/offers-slice/offers-slice.ts';
 import {MainPageEmpty} from './main-page-empty.tsx';
 import {PlacesContainer} from './places-container.tsx';
 

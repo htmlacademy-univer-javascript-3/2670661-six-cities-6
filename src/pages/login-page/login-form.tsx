@@ -1,6 +1,6 @@
 import {FC, FormEventHandler, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {userLogin} from '../../slices/current-user-slice.ts';
+import {userLogin} from '../../slices/current-user-slice/current-user-slice.ts';
 
 export const LoginForm: FC = () => {
   const dispatch = useAppDispatch();

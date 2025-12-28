@@ -5,7 +5,7 @@ import {HeaderUserInfo} from '../../components/shared/header-user-info.tsx';
 import {groupOffersByCity} from '../../shared/entities/offer/data-mappers.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {loadFavorites} from '../../slices/favorites-page-slice.ts';
+import {loadFavorites} from '../../slices/favorites-page-slice/favorites-page-slice.ts';
 import {FavoriteOfferCardList} from './favorite-offer-card-list/favorite-offer-card-list.tsx';
 import {FavoritesEmpty} from './favorites-empty.tsx';
 

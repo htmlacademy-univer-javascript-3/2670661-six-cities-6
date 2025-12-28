@@ -5,10 +5,10 @@ import {ReducerName} from '../shared/enums/reducer-names.ts';
 import {ThunkExtraArguments} from '../shared/redux-helpers/typed-thunk.ts';
 import {axiosClient} from '../shared/server-interaction/constants.ts';
 import {showErrorNotification} from '../shared/utils/notifications.ts';
-import {currentUserReducer} from '../slices/current-user-slice.ts';
-import {favoritesPageReducer} from '../slices/favorites-page-slice.ts';
-import {offerPageReducer} from '../slices/offer-page-slice.ts';
-import {offersReducer} from '../slices/offers-slice.ts';
+import {currentUserReducer} from '../slices/current-user-slice/current-user-slice.ts';
+import {favoritesPageReducer} from '../slices/favorites-page-slice/favorites-page-slice.ts';
+import {offerPageReducer} from '../slices/offer-page-slice/offer-page-slice.ts';
+import {offersReducer} from '../slices/offers-slice/offers-slice.ts';
 
 export const store = configureStore({
   reducer: {
