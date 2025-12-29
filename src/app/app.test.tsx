@@ -4,7 +4,7 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {MemoryRouter} from 'react-router-dom';
 import {vi} from 'vitest';
-import {AuthSuccessResultDto} from '../shared/entities/user/types.ts';
+import {UserData} from '../shared/entities/user/types.ts';
 import {ReducerName} from '../shared/enums/reducer-names.ts';
 import {RoutePath} from '../shared/enums/routes.ts';
 import {RootState} from '../shared/redux-helpers/typed-hooks.ts';
@@ -61,7 +61,7 @@ describe('App Routing', () => {
   });
 
   it('should render FavoritesPage if user data exists', () => {
-    renderWithRouter(<App/>, '/' + RoutePath.FavoritesPage, {[ReducerName.currentUser]: {userData: {} as AuthSuccessResultDto}});
+    renderWithRouter(<App/>, '/' + RoutePath.FavoritesPage, {[ReducerName.currentUser]: {userData: {} as UserData}});
     expect(screen.getByTestId('FavoritesPage')).toBeInTheDocument();
   });
 

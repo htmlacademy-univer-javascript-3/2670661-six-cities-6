@@ -4,7 +4,7 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
 import {createStore} from '../../app/store.ts';
-import {AuthSuccessResultDto} from '../../shared/entities/user/types.ts';
+import {UserData} from '../../shared/entities/user/types.ts';
 import {ReducerName} from '../../shared/enums/reducer-names.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {RootState} from '../../shared/redux-helpers/typed-hooks.ts';
@@ -45,7 +45,7 @@ describe('Component: PrivateRoute', () => {
   });
 
   it('should render protected content for auth user', () => {
-    renderWithRouter(<TestRouting/>, '/protected', {[ReducerName.currentUser]: {userData: {} as AuthSuccessResultDto}});
+    renderWithRouter(<TestRouting/>, '/protected', {[ReducerName.currentUser]: {userData: {} as UserData}});
     expect(screen.getByTestId('protected-content')).toBeInTheDocument();
     expect(screen.queryByTestId('login-page')).not.toBeInTheDocument();
   });
