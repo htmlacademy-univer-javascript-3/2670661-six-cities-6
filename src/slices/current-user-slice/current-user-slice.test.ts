@@ -7,11 +7,13 @@ import {extractActionTypes} from '../../shared/redux-helpers/test-helpers.ts';
 import {RootState} from '../../shared/redux-helpers/typed-hooks.ts';
 import {AppThunkDispatch} from '../../shared/redux-helpers/typed-thunk.ts';
 import {axiosClient, userUrl} from '../../shared/server-interaction/constants.ts';
+import {RequestStatus} from '../../shared/server-interaction/request-status.ts';
 import {currentUserReducer, currentUserSlice, userLogin, userLogout} from './current-user-slice.ts';
 
 type StateType = ReturnType<(typeof currentUserSlice)['getInitialState']>;
 
 const initialState = {
+  checkAuthStatus: RequestStatus.idle,
   isLogoutPending: false,
   isAuthInPending: false,
   authorizationError: null,
@@ -34,6 +36,7 @@ describe('currentUserSlice', () => {
   it('should return the state with empty action', () => {
     const emptyAction = {type: ''};
     const expectedState = {
+      checkAuthStatus: RequestStatus.idle,
       isLogoutPending: true,
       isAuthInPending: true,
       authorizationError: null,
@@ -47,6 +50,7 @@ describe('currentUserSlice', () => {
   it('should return default initial state', () => {
     const emptyAction = {type: ''};
     const expectedState = {
+      checkAuthStatus: RequestStatus.idle,
       isLogoutPending: false,
       isAuthInPending: false,
       authorizationError: null,
