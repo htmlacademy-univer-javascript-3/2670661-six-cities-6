@@ -3,7 +3,7 @@ import {useOutsideClick} from '../../hooks/use-outside-click/use-outside-click.t
 import {SelectorOption} from './model/types.ts';
 import {SelectorWidget} from './selector-widget.tsx';
 
-vi.mock('../../hooks/use-outside-click.ts', () => ({
+vi.mock('../../hooks/use-outside-click/use-outside-click.ts', () => ({
   useOutsideClick: vi.fn(),
 }));
 
