@@ -1,8 +1,8 @@
 import React, {FC, useMemo} from 'react';
-import {DEFAULT_CITY} from '../../entities/city/model/constants.ts';
+import {MapWidget} from '../../components/map-widget/map-widget.tsx';
+import {PointOnMap} from '../../components/map-widget/model/types.ts';
+import {DEFAULT_CITY} from '../../shared/entities/city/constants.ts';
 import {useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {PointOnMap} from '../../widgets/map/model/types.ts';
-import {MapWidget} from '../../widgets/map/ui/map-widget.tsx';
 
 export const MapWrapper: FC = React.memo(() => {
   const currentCity = useAppSelector((state) => state.offers.cities[state.offers.currentCity]) ?? DEFAULT_CITY;

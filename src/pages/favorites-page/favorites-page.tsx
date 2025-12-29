@@ -1,12 +1,12 @@
 import {FC, useEffect, useMemo} from 'react';
 import {NavLink} from 'react-router-dom';
-import {groupOffersByCity} from '../../entities/offer/model/data-mappers.ts';
-import {loadFavorites} from '../../features/offers-manager/model/favorites-page-slice.ts';
-import {HeaderLogoLink} from '../../shared/components/header-logo-link.tsx';
+import {HeaderLogoLink} from '../../components/shared/header-logo-link/header-logo-link.tsx';
+import {HeaderUserInfo} from '../../components/shared/header-user-info/header-user-info.tsx';
+import {groupOffersByCity} from '../../shared/entities/offer/data-mappers.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {HeaderUserInfo} from '../../widgets/common-components/header-user-info.tsx';
-import {FavoriteOfferCardList} from './cards/favorite-offer-card-list.tsx';
+import {loadFavorites} from '../../slices/favorites-page-slice/favorites-page-slice.ts';
+import {FavoriteOfferCardList} from './favorite-offer-card-list/favorite-offer-card-list.tsx';
 import {FavoritesEmpty} from './favorites-empty.tsx';
 
 export const FavoritesPage: FC = () => {
@@ -16,8 +16,7 @@ export const FavoritesPage: FC = () => {
 
   useEffect(() => {
     dispatch(loadFavorites());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="page">

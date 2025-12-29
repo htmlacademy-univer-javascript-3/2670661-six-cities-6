@@ -1,16 +1,16 @@
 import React, {FC, useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {DEFAULT_CITY} from '../../entities/city/model/constants.ts';
-import {OfferSortOption} from '../../entities/offer/model/constants.ts';
-import {Offer} from '../../entities/offer/model/types.ts';
-import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
-import {changeFavoriteStatus} from '../../features/offers-manager/model/favorites-page-slice.ts';
-import {setActiveOffer, setOffersSort} from '../../features/offers-manager/model/offers-slice.ts';
+import {OfferCardList} from '../../components/offer-card-list/offer-card-list.tsx';
+import {SelectorOption} from '../../components/selector-widget/model/types.ts';
+import {SelectorWidget} from '../../components/selector-widget/selector-widget.tsx';
+import {DEFAULT_CITY} from '../../shared/entities/city/constants.ts';
+import {OfferSortOption} from '../../shared/entities/offer/constants.ts';
+import {Offer} from '../../shared/entities/offer/types.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
 import {FavoriteStatus} from '../../shared/server-interaction/constants.ts';
-import {SelectorOption} from '../../widgets/selector/model/types.ts';
-import {SelectorWidget} from '../../widgets/selector/ui/selector-widget.tsx';
+import {changeFavoriteStatus} from '../../slices/favorites-page-slice/favorites-page-slice.ts';
+import {setActiveOffer, setOffersSort} from '../../slices/offers-slice/offers-slice.ts';
 import {MapWrapper} from './map-wrapper.tsx';
 
 const sortOptions: SelectorOption[] = [

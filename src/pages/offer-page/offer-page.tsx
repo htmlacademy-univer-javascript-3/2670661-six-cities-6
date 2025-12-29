@@ -1,36 +1,48 @@
-import {FC, useEffect} from 'react';
-import {Navigate, useParams} from 'react-router-dom';
-import {OfferCardList} from '../../entities/offer/ui/offer-card-list.tsx';
-import {loadNearbyOffers, loadOffer} from '../../features/offers-manager/model/offer-page-slice.ts';
+import {FC, useCallback, useEffect} from 'react';
+import {Navigate, useNavigate, useParams} from 'react-router-dom';
+import {MapWidget} from '../../components/map-widget/map-widget.tsx';
+import {PointOnMap} from '../../components/map-widget/model/types.ts';
+import {OfferCardList} from '../../components/offer-card-list/offer-card-list.tsx';
+import {Spinner} from '../../components/spinner/spinner.tsx';
+import {Offer, OfferExtendedDto} from '../../shared/entities/offer/types.ts';
 import {RoutePath} from '../../shared/enums/routes.ts';
 import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {PointOnMap} from '../../widgets/map/model/types.ts';
-import {MapWidget} from '../../widgets/map/ui/map-widget.tsx';
-import {Spinner} from '../../widgets/spinner/ui/spinner.tsx';
+import {FavoriteStatus} from '../../shared/server-interaction/constants.ts';
+import {changeFavoriteStatus} from '../../slices/favorites-page-slice/favorites-page-slice.ts';
+import {loadNearbyOffers, loadOffer} from '../../slices/offer-page-slice/offer-page-slice.ts';
 import {CommentsList} from './comments-list.tsx';
 import {FeedbackForm} from './feedback-form.tsx';
 import {OfferPageWrapper} from './offer-page-wrapper.tsx';
 
+const offerToPointOnMap = (offer: Offer | OfferExtendedDto): PointOnMap => ({
+  id: offer.id,
+  coordinates: offer.location,
+  popupNode: offer.title,
+});
+
 export const OfferPage: FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {id: offerId = ''} = useParams();
   const isAuthorized = useAppSelector((state) => !!state.currentUser.userData);
   const offerData = useAppSelector((state) => state.offerPage.offerData);
-  const nearbyOffers = useAppSelector((state) => state.offerPage.nearbyOffers).slice(0, 6);
+  const nearbyOffers = useAppSelector((state) => state.offerPage.nearbyOffers).slice(0, 3);
   const loadError = useAppSelector((state) => state.offerPage.offersLoadingError);
   const loadErrorNearby = useAppSelector((state) => state.offerPage.nearbyLoadingError);
+
+  const onChangeFavoriteStatus = useCallback((ofId: Offer['id'], status: FavoriteStatus) => {
+    if (isAuthorized) {
+      dispatch(changeFavoriteStatus({offerId: ofId, status}));
+    } else {
+      navigate('/' + RoutePath.LoginPage);
+    }
+  }, [navigate, dispatch, isAuthorized]);
 
   useEffect(() => {
     dispatch(loadOffer(offerId));
     dispatch(loadNearbyOffers(offerId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offerId]);
-
-  const markers: PointOnMap[] = nearbyOffers.map((offer) => ({
-    id: offer.id,
-    coordinates: offer.location,
-    popupNode: offer.title
-  }));
 
   if (loadError || loadErrorNearby) {
     return <Navigate to={'/' + RoutePath.Page404}/>;
@@ -43,6 +55,9 @@ export const OfferPage: FC = () => {
       </OfferPageWrapper>
     );
   }
+
+  const markers: PointOnMap[] = [offerData, ...nearbyOffers].map(offerToPointOnMap);
+  const roundedRating = Math.max(1, Math.min(5, Math.round(offerData?.rating ?? 0)));
 
   const bookmarkClassnames = ['offer__bookmark-button', 'button'];
   if (offerData.isFavorite) {
@@ -76,7 +91,11 @@ export const OfferPage: FC = () => {
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{offerData.title}</h1>
-                <button className={bookmarkClassnames.join(' ')} type="button">
+                <button
+                  className={bookmarkClassnames.join(' ')}
+                  type="button"
+                  onClick={() => onChangeFavoriteStatus(offerId, offerData.isFavorite ? FavoriteStatus.NotFavorite : FavoriteStatus.Favorite)}
+                >
                   <svg className="offer__bookmark-icon " width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -85,7 +104,7 @@ export const OfferPage: FC = () => {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: offerData.rating * 20 + '%'}}></span>
+                  <span style={{width: roundedRating * 20 + '%'}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{offerData.rating}</span>
@@ -95,10 +114,10 @@ export const OfferPage: FC = () => {
                   {offerData.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {offerData.bedrooms} Bedrooms
+                  {offerData.bedrooms} Bedroom{offerData.bedrooms > 1 && 's'}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {offerData.maxAdults} adults
+                  Max {offerData.maxAdults} adult{offerData.maxAdults > 1 && 's'}
                 </li>
               </ul>
               <div className="offer__price">
@@ -140,13 +159,18 @@ export const OfferPage: FC = () => {
             mapCenter={{...offerData.location, zoom: 14}}
             mapContainerClassName="offer__map map"
             markers={markers}
+            activeMarkers={[offerData.id]}
             scrollWheelZoom={false}
           />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OfferCardList offers={nearbyOffers} containerClassName="near-places__list places__list"/>
+            <OfferCardList
+              offers={nearbyOffers}
+              containerClassName="near-places__list places__list"
+              onChangeFavoriteStatus={onChangeFavoriteStatus}
+            />
           </section>
         </div>
       </main>
