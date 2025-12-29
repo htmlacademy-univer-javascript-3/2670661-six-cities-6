@@ -19,7 +19,7 @@ export const FavoriteOfferCard: FC<FavoriteOfferCardProps> = ({offer}) => {
     bookmarkedClassList.push('place-card__bookmark-button--active');
   }
 
-  const onBookmarkClick = () => {
+  const handleBookmarkClick = () => {
     dispatch(changeFavoriteStatus({
       offerId: offer.id,
       status: offer.isFavorite ? FavoriteStatus.NotFavorite : FavoriteStatus.Favorite,
@@ -47,7 +47,7 @@ export const FavoriteOfferCard: FC<FavoriteOfferCardProps> = ({offer}) => {
           <button
             className={bookmarkedClassList.join(' ')}
             type="button"
-            onClick={onBookmarkClick}
+            onClick={handleBookmarkClick}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

@@ -6,6 +6,7 @@ import {activeMarker, defaultMarker} from './model/markers.ts';
 import {PointOnMap} from './model/types.ts';
 import {UpdateMapCenter} from './update-map-center.tsx';
 
+const TOP_MARKER_Z_INDEX = 100000;
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 const URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 
@@ -39,7 +40,7 @@ export const MapWidget: FC<MapWidgetProps> = ({
             key={markerId}
             position={[coordinates.latitude, coordinates.longitude]}
             icon={isActive ? activeMarker : defaultMarker}
-            zIndexOffset={isActive ? 100000 : 0}
+            zIndexOffset={isActive ? TOP_MARKER_Z_INDEX : 0}
           >
             {popupNode && <Popup>{popupNode}</Popup>}
           </Marker>
