@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {NavLink} from 'react-router-dom';
-import {RoutePath} from '../../shared/enums/routes.ts';
-import {useAppDispatch, useAppSelector} from '../../shared/redux-helpers/typed-hooks.ts';
-import {userLogout} from '../../slices/current-user-slice/current-user-slice.ts';
+import {RoutePath} from '../../../shared/enums/routes.ts';
+import {useAppDispatch, useAppSelector} from '../../../shared/redux-helpers/typed-hooks.ts';
+import {userLogout} from '../../../slices/current-user-slice/current-user-slice.ts';
 
 export const HeaderUserInfo: FC = React.memo(() => {
   const dispatch = useAppDispatch();

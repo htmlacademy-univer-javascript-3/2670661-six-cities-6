@@ -1,6 +1,6 @@
 import {FC, ReactNode} from 'react';
 import {HeaderLogoLink} from '../../components/shared/header-logo-link/header-logo-link.tsx';
-import {HeaderUserInfo} from '../../components/shared/header-user-info.tsx';
+import {HeaderUserInfo} from '../../components/shared/header-user-info/header-user-info.tsx';
 
 export const OfferPageWrapper: FC<{children: ReactNode}> = ({children}) => {
   return (

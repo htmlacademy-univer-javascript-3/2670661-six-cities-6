@@ -2,7 +2,7 @@ import {FC, useCallback, useEffect} from 'react';
 import {useSearchParams} from 'react-router-dom';
 import {CityLinkList} from '../../components/city-link-list/city-link-list.tsx';
 import {HeaderLogoLink} from '../../components/shared/header-logo-link/header-logo-link.tsx';
-import {HeaderUserInfo} from '../../components/shared/header-user-info.tsx';
+import {HeaderUserInfo} from '../../components/shared/header-user-info/header-user-info.tsx';
 import {FullSpaceSpinner} from '../../components/spinner/full-space-spinner.tsx';
 import {CITY_SEARCH_PARAM} from '../../shared/entities/city/constants.ts';
 import {City} from '../../shared/entities/city/types.ts';
