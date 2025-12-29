@@ -39,8 +39,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({offerId}) => {
 
   useEffect(() => {
     dispatch(resetCommentPostingState());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (postingState === RequestStatus.success) {
@@ -50,8 +49,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({offerId}) => {
     if (postingState === RequestStatus.success || postingState === RequestStatus.failure) {
       dispatch(handleCommentPostingResult());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [postingState, setRating, setCommentText]);
+  }, [dispatch, postingState, setRating, setCommentText]);
 
   return (
     <form

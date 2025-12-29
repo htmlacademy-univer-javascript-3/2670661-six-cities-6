@@ -13,8 +13,7 @@ export const CommentsList = () => {
 
   useEffect(() => {
     dispatch(loadComments(offerId));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offerId]);
+  }, [dispatch, offerId]);
 
   if (isLoading) {
     return <Spinner/>;
