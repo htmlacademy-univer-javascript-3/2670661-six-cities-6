@@ -16,8 +16,7 @@ export const FavoritesPage: FC = () => {
 
   useEffect(() => {
     dispatch(loadFavorites());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="page">
