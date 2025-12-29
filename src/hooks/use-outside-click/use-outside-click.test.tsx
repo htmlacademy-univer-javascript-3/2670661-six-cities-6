@@ -1,6 +1,6 @@
 import {fireEvent, render, screen} from '@testing-library/react';
 import {useRef, useState} from 'react';
-import {useOutsideClick} from './use-outside-click';
+import {useOutsideClick} from './use-outside-click.ts';
 
 const TestComponent = ({onOutsideClick}: {onOutsideClick: () => void}) => {
   const ref = useRef<HTMLDivElement>(null);

@@ -11,6 +11,9 @@ type FeedbackFormProps = {
 
 const starTitles = [undefined, 'terribly', 'badly', 'not bad', 'good', 'perfect'] as const;
 
+const MIN_COMMENTARY_LENGTH = 50;
+const MAX_COMMENTARY_LENGTH = 300;
+
 export const FeedbackForm: FC<FeedbackFormProps> = ({offerId}) => {
   const dispatch = useAppDispatch();
   const postingState = useAppSelector((state) => state.offerPage.commentPostingState);
@@ -20,8 +23,8 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({offerId}) => {
   const [comment, setCommentText] = useState('');
 
   const isSubmitDisabled = rating === 0
-    || comment.length < 50
-    || comment.length > 300
+    || comment.length < MIN_COMMENTARY_LENGTH
+    || comment.length > MAX_COMMENTARY_LENGTH
     || postingState !== RequestStatus.idle;
 
   const handleStarClick: FormEventHandler<HTMLInputElement> = (e) => {
@@ -42,13 +45,19 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({offerId}) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (postingState === RequestStatus.success) {
+    let isMounted = true;
+
+    if (isMounted && postingState === RequestStatus.success) {
       setCommentText('');
       setRating(0);
     }
     if (postingState === RequestStatus.success || postingState === RequestStatus.failure) {
       dispatch(handleCommentPostingResult());
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [dispatch, postingState, setRating, setCommentText]);
 
   return (

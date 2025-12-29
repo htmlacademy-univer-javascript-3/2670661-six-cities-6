@@ -30,7 +30,7 @@ export const OfferPage: FC = () => {
   const loadError = useAppSelector((state) => state.offerPage.offersLoadingError);
   const loadErrorNearby = useAppSelector((state) => state.offerPage.nearbyLoadingError);
 
-  const onChangeFavoriteStatus = useCallback((ofId: Offer['id'], status: FavoriteStatus) => {
+  const handleChangeFavoriteStatus = useCallback((ofId: Offer['id'], status: FavoriteStatus) => {
     if (isAuthorized) {
       dispatch(changeFavoriteStatus({offerId: ofId, status}));
     } else {
@@ -94,7 +94,7 @@ export const OfferPage: FC = () => {
                 <button
                   className={bookmarkClassnames.join(' ')}
                   type="button"
-                  onClick={() => onChangeFavoriteStatus(offerId, offerData.isFavorite ? FavoriteStatus.NotFavorite : FavoriteStatus.Favorite)}
+                  onClick={() => handleChangeFavoriteStatus(offerId, offerData.isFavorite ? FavoriteStatus.NotFavorite : FavoriteStatus.Favorite)}
                 >
                   <svg className="offer__bookmark-icon " width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
@@ -169,7 +169,7 @@ export const OfferPage: FC = () => {
             <OfferCardList
               offers={nearbyOffers}
               containerClassName="near-places__list places__list"
-              onChangeFavoriteStatus={onChangeFavoriteStatus}
+              onChangeFavoriteStatus={handleChangeFavoriteStatus}
             />
           </section>
         </div>

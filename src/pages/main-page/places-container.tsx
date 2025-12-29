@@ -36,7 +36,7 @@ export const PlacesContainer: FC = React.memo(() => {
     dispatch(setOffersSort(sortOption as OfferSortOption));
   }, [dispatch]);
 
-  const onChangeFavoriteStatus = useCallback((offerId: Offer['id'], status: FavoriteStatus) => {
+  const handleChangeFavoriteStatus = useCallback((offerId: Offer['id'], status: FavoriteStatus) => {
     if (isAuthorized) {
       dispatch(changeFavoriteStatus({offerId, status}));
     } else {
@@ -60,7 +60,7 @@ export const PlacesContainer: FC = React.memo(() => {
           offers={offers}
           containerClassName="cities__places-list places__list tabs__content"
           onCardHover={handleOfferHover}
-          onChangeFavoriteStatus={onChangeFavoriteStatus}
+          onChangeFavoriteStatus={handleChangeFavoriteStatus}
         />
       </section>
       <div className="cities__right-section">
